@@ -24,6 +24,7 @@ namespace Rentit.BL.Dtos
         public string State { get; set; } = string.Empty;
         public int HostId { get; set; }
         public string HostName { get; set; } = string.Empty;
+        public string Host_image {  get; set; } = string.Empty;     
 
         public List<ImageChildDto> Images { get; set; } = new();
         public List<AttributesChildDto> attributes { get; set; } = new();

@@ -22,39 +22,39 @@ namespace Rentit.BL
             this.requestrentRepo = _requestRentrepo;    
         }
 
-        public int AcceptByAdmin(int requestid)
+        public bool AcceptByAdmin(int propertyid)
         {
-            RequestRent? request = requestrentRepo.GetByID(requestid);  
-            if (request == null || request.Request_StateID_Host!=2) { return -1; }
+            RequestRent? request = requestrentRepo.GetByID(propertyid);
+            if (request == null || request.Request_StateID_Host != 2)
             request.Request_StateID_Admin = 2;
             request.Message = "Your Request For Renting your property is accecpted ";
             request.Property.StateId = 3;
             requestrentRepo.Update(request);
-            requestrentRepo.SaveChanges();  
-            return request.Id;
+            requestrentRepo.SaveChanges();
+            return true;   ;
         }
 
-        public int AcceptByHost(int requestid)
+        public bool AcceptByHost(int propertyid)
         {
-            RequestRent? request = requestrentRepo.GetByID(requestid);
-            if (request == null || request.Request_StateID_Host !=1) { return -1; } 
+            RequestRent? request = requestrentRepo.GetByID(propertyid);
+            if (request == null || request.Request_StateID_Host != 1) { return false; }
             request.Request_StateID_Host = 2;
             request.Message = "Your Request Has been accpected by the Host," +
                 "Please acquire the rental fee to secure the property for rent.";
             requestrentRepo.Update(request);    
             requestrentRepo.SaveChanges();  
-            return request.Id;  
+            return true;
 
         }
 
-        public int AddRequest(RequestRentAddDto item,int propertyid)
+        public bool AddRequest(RequestRentAddDto item, int propertyid)
         {
-
             Propertyy? property = propertyRepo.GetByID(propertyid);
-            if(property == null) { return -1; }
-            if (item.NumOfGuests > property.Nums_Guests) { return -1; }
-            if(item.UserId == property.HostId) { return -1; }   
-                TimeSpan timeSpan = item.Checkout_date - item.Checkin_date;
+            if (property == null) { return false; }
+            if (property.StateId != 1) { return false; }
+            if (item.NumOfGuests > property.Nums_Guests) { return false; }
+            if (item.UserId == property.HostId) { return false; }
+            TimeSpan timeSpan = item.Checkout_date - item.Checkin_date;
             int difference = Math.Abs(timeSpan.Days);
             double WebFee = (item.ServiceFee + (property.Nighly_Price * difference)) * 0.15;
             double total = WebFee + (property.Nighly_Price * difference) + item.ServiceFee;
@@ -77,7 +77,7 @@ namespace Rentit.BL
             };
             requestrentRepo.Add(addrequestrent);
             requestrentRepo.SaveChanges();
-            return addrequestrent.Id;
+            return true;
         }
 
      

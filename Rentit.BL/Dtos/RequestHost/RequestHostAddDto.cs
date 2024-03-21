@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Rentit.BL.Dtos
 {
-    public class RequestHostDto
+    public class RequestHostAddDto
     {
 
         public required int UserID { get; set; }

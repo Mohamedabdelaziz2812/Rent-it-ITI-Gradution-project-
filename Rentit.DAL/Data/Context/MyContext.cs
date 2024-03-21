@@ -21,6 +21,7 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-01-01"),
                 Start_HostingDate = DateTime.Parse("2022-02-01"),
                 RoleId = 1, // Assuming RoleId exists
+                Img_URL = "user1.jpg"
             },
             new User
             {
@@ -31,6 +32,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-03-15"),
                 Start_HostingDate = DateTime.Parse("2022-04-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user2.jpg"
+
             },
             // Add 8 more users
             new User
@@ -41,6 +44,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-05-20"),
                 Start_HostingDate = DateTime.Parse("2022-06-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user3.jpg"
+
             },
             new User
             {
@@ -51,6 +56,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-07-10"),
                 Start_HostingDate = DateTime.Parse("2022-08-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user4.jpg"
+
             },
             new User
             {Id = 5,
@@ -60,6 +67,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-09-15"),
                 Start_HostingDate = DateTime.Parse("2022-10-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user5.jpg"
+
             },
             new User
             {Id=6,
@@ -69,6 +78,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2022-11-20"),
                 Start_HostingDate = DateTime.Parse("2022-12-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user6.jpg"
+
             },
             new User
             {Id=7,
@@ -78,6 +89,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2023-01-05"),
                 Start_HostingDate = DateTime.Parse("2023-02-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user7.jpg"
+
             },
             new User
             {
@@ -88,6 +101,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2023-03-10"),
                 Start_HostingDate = DateTime.Parse("2023-04-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user8.jpg"
+
             },
             new User
             {
@@ -98,6 +113,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2023-05-15"),
                 Start_HostingDate = DateTime.Parse("2023-06-01"),
                 RoleId = 2,
+                Img_URL = "user9.jpg"
+
 
             },
             new User
@@ -109,6 +126,8 @@ namespace Rentit.DAL
                 JoinedDate = DateTime.Parse("2023-07-20"),
                 Start_HostingDate = DateTime.Parse("2023-08-01"),
                 RoleId = 2, // Assuming RoleId exists
+                Img_URL = "user10.jpg"
+
             }
             };
             #endregion

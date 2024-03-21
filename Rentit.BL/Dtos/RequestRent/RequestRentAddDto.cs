@@ -12,7 +12,6 @@ namespace Rentit.BL.Dtos
         public DateTime Checkin_date { get; set; }
         public DateTime Checkout_date { get; set; }
         public int ServiceFee { get; set; }
-        public int StayDurationInDays { get; set; }
         public int NumOfGuests { get; set; }
     }
 }

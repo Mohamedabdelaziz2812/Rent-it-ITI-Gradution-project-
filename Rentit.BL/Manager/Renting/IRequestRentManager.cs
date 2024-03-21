@@ -1,4 +1,5 @@
 ﻿using Rentit.BL.Dtos;
+using Rentit.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace Rentit.BL
         IEnumerable<RequestRentReadDto> GetAllForHost(int id);
       
 
-        int AddRequest (RequestRentAddDto item , int propertyid); 
-        int AcceptByHost (int requestid);
-        int AcceptByAdmin(int requestid);
+        bool AddRequest (RequestRentAddDto item , int propertyid); 
+        bool AcceptByHost (int propertyid);
+        bool AcceptByAdmin(int propertyid);
     }
 }

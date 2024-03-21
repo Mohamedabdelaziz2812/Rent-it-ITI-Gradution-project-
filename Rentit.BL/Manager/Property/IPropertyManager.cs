@@ -12,7 +12,7 @@ namespace Rentit.BL
     {
         IEnumerable<ListPropertyReadDto> GetAll();
         ListPropertyReadDto? GetById(int id);
-        int Add(int requestID);
+        bool Add(int requestID);
         bool Update (PropertyUpdateDto propertyUpdate);
         bool Delete(int id);
         PropertyReadDetailsDto? GetPropertyDetails (int id);

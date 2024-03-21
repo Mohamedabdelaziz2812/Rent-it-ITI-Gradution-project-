@@ -35,6 +35,10 @@ namespace Rentit.APIs
             
             builder.Services.AddScoped<IRequestRentManager, RequestRentManager>();  
 
+            builder.Services.AddScoped<IUserManager, UserManager>();    
+
+            builder.Services.AddScoped<IUserRepo, UserRepo>();  
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

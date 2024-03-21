@@ -9,6 +9,7 @@ namespace Rentit.DAL
         public string FName { get; set; } = string.Empty;
         public string LName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Img_URL { get; set; } =string.Empty;      
         public DateTime JoinedDate { get; set; }
         public DateTime Start_HostingDate { get; set; }
         [ForeignKey("Role")]
