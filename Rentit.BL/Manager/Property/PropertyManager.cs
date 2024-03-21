@@ -17,12 +17,12 @@ namespace Rentit.BL
         { this.propertyRepo = _propertyRepo; 
           this.requestHostRepo = _requestHostRepo;
         }
-        public int Add(int requestID)
+        public bool Add(int requestID)
         {
             RequestHost? propertyAdd = requestHostRepo.GetByID(requestID);
             if (propertyAdd?.Request_StateID != 2)
             {
-                return -1;  
+                return false;  
             }
             Location loc = new()
             {
@@ -53,7 +53,7 @@ namespace Rentit.BL
             };
             propertyRepo.Add(property);
             propertyRepo.SaveChanges();
-            return property.Id;
+            return true;
         }
 
         public bool Delete(int id)
@@ -67,7 +67,19 @@ namespace Rentit.BL
 
         public IEnumerable<ListPropertyReadDto> GetAll()
         {
+            DateTime TodayTime = DateTime.Now;  
             IEnumerable<Propertyy> PropertiesFromDb = propertyRepo.GetAll();
+            foreach(Propertyy property in PropertiesFromDb)
+            {
+                foreach(RequestRent request in property.RequestRents)
+                {
+                    if(request.Checkout_date <  TodayTime)
+                    {
+                        property.StateId= 1;    
+                    }
+
+                }
+            }
             return PropertiesFromDb.Select(p => new ListPropertyReadDto
             {
                 Id = p.Id,
@@ -114,7 +126,15 @@ namespace Rentit.BL
 
         public PropertyReadDetailsDto? GetPropertyDetails(int id)
         {
+            DateTime TodayTime = DateTime.Now;
             Propertyy? property = propertyRepo.GetPropertyWithImagesAndAttributs(id);
+                foreach (RequestRent request in property.RequestRents)
+                {
+                    if (request.Checkout_date < TodayTime)
+                    {
+                        property.StateId = 1;
+                    }
+                }
             int x = property.Nums_Web_visitors++;
             propertyRepo.Update(property);
             propertyRepo.SaveChanges(); 
@@ -146,6 +166,7 @@ namespace Rentit.BL
                 State = property.Property_States.Name,
                 HostId = property.User.Id,
                 HostName = $"{property.User.FName} {property.User.LName}",
+                Host_image=property.User.Img_URL,
                 location = loc,
                 Images = property.Property_imgs.Select(i => new ImageChildDto
                 {

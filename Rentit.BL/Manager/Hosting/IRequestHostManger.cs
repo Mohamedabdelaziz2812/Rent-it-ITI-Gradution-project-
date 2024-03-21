@@ -9,7 +9,9 @@ namespace Rentit.BL
 {
     public interface IRequestHostManger
     {
-        int AddRequestHost(PropertyAddDto propertyAdd);
-        int AcceptRequestByAdmin(int requestID);
+        bool AddRequestHost(PropertyAddDto propertyAdd);
+        bool AcceptHostRequestByAdmin(int requestID);
+        IEnumerable<RequestHostReadDto> GetAll();
+
     }
 }

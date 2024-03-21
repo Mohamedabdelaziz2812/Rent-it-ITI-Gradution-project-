@@ -16,18 +16,18 @@ namespace Rentit.BL
         {
             this.requestHostRepo = _requestHostRepo;    
         }
-        public int AcceptRequestByAdmin(int requestID)
+        public bool AcceptHostRequestByAdmin(int requestID)
         {
             RequestHost? request = requestHostRepo.GetByID(requestID);
-            if (request == null) { return -1; }
+            if (request == null) { return false; }
             request.Request_StateID = 2;
             request.Message = "Your Request For Hosting your property is accecpted ";
             requestHostRepo.Update(request);
             requestHostRepo.SaveChanges();
-            return request.Id;
+            return true;
         }
 
-        public int AddRequestHost(PropertyAddDto propertyAdd)
+        public bool AddRequestHost(PropertyAddDto propertyAdd)
         {
             RequestHost addrequestHost = new()
             {
@@ -52,7 +52,37 @@ namespace Rentit.BL
             };
             requestHostRepo.Add(addrequestHost);
             requestHostRepo.SaveChanges();
-            return addrequestHost.Id;
+            return true;
+        }
+
+        public IEnumerable<RequestHostReadDto> GetAll()
+        {
+            IEnumerable<RequestHost> requestHosts = requestHostRepo.GetAll();
+            return requestHosts.Select(i => new RequestHostReadDto
+            {
+                UserID = i.UserID,
+                Request_StateID = i.Request_StateID,
+                Request_State = i.Request_state.Status,
+                Property_Name = i.Property_Name,
+                Nighly_Price = i.Nighly_Price,
+                Description = i.Description,
+                Nums_Bathrooms = i.Nums_Bathrooms,
+                Nums_Bedrooms = i.Nums_Bedrooms,
+                Nums_Beds = i.Nums_Beds,
+                Nums_Guests = i.Nums_Guests,
+                Street = i.Street,
+                City = i.City,
+                Building_name = i.Building_name,
+                Building_no = i.Building_no,
+                District_name = i.District_name,
+                Location_url = i.Location_url,
+                GovernateId = i.GovernateId,
+                governate = i.governate.Name,
+                PlaceType_ID = i.PlaceType_ID,
+                Place_Type = i.Place_Type.Name,
+                PropetyTypeId = i.PropetyTypeId,
+                Property_Type = i.Property_Type.Name,
+            });
         }
     }
 }

@@ -28,13 +28,14 @@ namespace Rentit.DAL
         }
         public IEnumerable<Propertyy> GetAll()
         {
-            return context.Properties.OrderBy(p=>p.Nums_Web_visitors)
+            return context.Properties
                 .Include(p=>p.Place_Type)
                 .Include(p => p.Property_Type)
                 .Include(p=>p.User)
                 .Include(p=>p.Property_States)
                 .Include(p => p.Property_imgs)
                 .Include(p => p.Attributes)
+                .Include(p=>p.RequestRents)
                 .Include(p=>p.Location)
                 .ThenInclude(x=>x.Governate)
                 .OrderByDescending(p=>p.Nums_Web_visitors);
