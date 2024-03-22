@@ -27,11 +27,23 @@ namespace Rentit.BL
             RequestRent? request = requestrentRepo.GetByID(propertyid);
             if (request == null || request.Request_StateID_Host != 2) { return false; } 
             request.Request_StateID_Admin = 2;
-            request.Message = "Your Request For Renting your property is accecpted ";
+            request.Message = "Your Request For Renting your property is accecpted By Website Admin";
             request.Property.StateId = 3;
             requestrentRepo.Update(request);
             requestrentRepo.SaveChanges();
             return true;   ;
+        }
+
+        public bool CancelByAdmin(int propertyid)
+        {
+            RequestRent? request = requestrentRepo.GetByID(propertyid);
+            if (request == null || request.Request_StateID_Host != 2) { return false; }
+            request.Request_StateID_Admin = 3;
+            request.Message = "Your Request For Renting your property is Cancelled By Website Admin";
+            request.Property.StateId = 1;
+            requestrentRepo.Update(request);
+            requestrentRepo.SaveChanges();
+            return true; ;
         }
 
         public bool AcceptByHost(int propertyid)
@@ -43,6 +55,17 @@ namespace Rentit.BL
                 "Please acquire the rental fee to secure the property for rent.";
             requestrentRepo.Update(request);    
             requestrentRepo.SaveChanges();  
+            return true;
+
+        }
+        public bool CancelByHost(int propertyid)
+        {
+            RequestRent? request = requestrentRepo.GetByID(propertyid);
+            if (request == null || request.Request_StateID_Host != 1) { return false; }
+            request.Request_StateID_Host = 3;
+            request.Message = "Your Request Has been Cancelled by the Host";
+            requestrentRepo.Update(request);
+            requestrentRepo.SaveChanges();
             return true;
 
         }

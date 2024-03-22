@@ -11,6 +11,7 @@ namespace Rentit.BL
     {
         bool AddRequestHost(PropertyAddDto propertyAdd);
         bool AcceptHostRequestByAdmin(int requestID);
+        bool CancelHostRequestByAdmin(int requestID);
         IEnumerable<RequestHostReadDto> GetAll();
 
     }

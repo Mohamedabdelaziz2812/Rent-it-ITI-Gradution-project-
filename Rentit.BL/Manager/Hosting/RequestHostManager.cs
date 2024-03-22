@@ -27,6 +27,17 @@ namespace Rentit.BL
             return true;
         }
 
+        public bool CancelHostRequestByAdmin(int requestID)
+        {
+            RequestHost? request = requestHostRepo.GetByID(requestID);
+            if (request == null) { return false; }
+            request.Request_StateID = 3;
+            request.Message = "Your Request For Hosting your property is Cancelled ";
+            requestHostRepo.Update(request);
+            requestHostRepo.SaveChanges();
+            return true;
+        }
+
         public bool AddRequestHost(PropertyAddDto propertyAdd)
         {
             RequestHost addrequestHost = new()
