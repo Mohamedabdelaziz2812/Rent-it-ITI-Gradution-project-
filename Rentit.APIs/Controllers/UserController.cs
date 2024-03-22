@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rentit.BL;
@@ -11,12 +12,11 @@ namespace Rentit.APIs.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserManager UserManager;
+        private readonly IClientManager UserManager;
         private readonly IRequestHostManger requestHostManager;
         private readonly IPropertyManager PropertyManager;
         private readonly IRequestRentManager requestRentManager;
-
-        public UserController(IUserManager _userManager ,IRequestHostManger _RequestHostManager
+        public UserController(IClientManager _userManager ,IRequestHostManger _RequestHostManager
             ,IPropertyManager _PropertyManager , IRequestRentManager _requestRentManager)
         {
             this.UserManager = _userManager;   
@@ -46,8 +46,7 @@ namespace Rentit.APIs.Controllers
         [Route("Add/{id}")]
         public ActionResult AcceptRequestHost(int id) 
         {
-
-           var IsFound = requestHostManager.AcceptHostRequestByAdmin(id);
+            var IsFound = requestHostManager.AcceptHostRequestByAdmin(id);
             if(!IsFound) { return NotFound("Cant find the request please add your request for hosting"); } 
             PropertyManager.Add(id);
             return Created();
@@ -57,7 +56,7 @@ namespace Rentit.APIs.Controllers
         [Route("User/{id}")]
         public ActionResult AcceptRentRequestbyHost(int id) 
         {
-          var IsFound =  requestRentManager.AcceptByHost(id);
+            var IsFound =  requestRentManager.AcceptByHost(id);
             if (!IsFound) { return NotFound("Cant find the property"); }
             return Ok();
         }
@@ -84,6 +83,5 @@ namespace Rentit.APIs.Controllers
         {
             return requestHostManager.GetAll().ToList();    
         }
-
     }
 }

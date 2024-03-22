@@ -1,18 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Rentit.DAL;
 
 namespace Rentit.DAL
 {
-    public class MyContext : DbContext
+    public class MyContext : IdentityDbContext<Account>
     {
       
         public MyContext(DbContextOptions<MyContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region UsersData
-            var users = new List<User>
-            {  new User
+            var users = new List<Client>
+            {  new Client
             {
                 Id = 1,
                 FName = "John",
@@ -23,7 +24,7 @@ namespace Rentit.DAL
                 RoleId = 1, // Assuming RoleId exists
                 Img_URL = "user1.jpg"
             },
-            new User
+            new Client
             {
                 Id=2,
                 FName = "Jane",
@@ -36,7 +37,7 @@ namespace Rentit.DAL
 
             },
             // Add 8 more users
-            new User
+            new Client
             {Id = 3,
                 FName = "Alice",
                 LName = "Johnson",
@@ -47,7 +48,7 @@ namespace Rentit.DAL
                 Img_URL = "user3.jpg"
 
             },
-            new User
+            new Client
             {
                 Id=4,
                 FName = "Bob",
@@ -59,7 +60,7 @@ namespace Rentit.DAL
                 Img_URL = "user4.jpg"
 
             },
-            new User
+            new Client
             {Id = 5,
                 FName = "Eva",
                 LName = "Martinez",
@@ -70,7 +71,7 @@ namespace Rentit.DAL
                 Img_URL = "user5.jpg"
 
             },
-            new User
+            new Client
             {Id=6,
                 FName = "Michael",
                 LName = "Lee",
@@ -81,7 +82,7 @@ namespace Rentit.DAL
                 Img_URL = "user6.jpg"
 
             },
-            new User
+            new Client
             {Id=7,
                 FName = "Sarah",
                 LName = "Garcia",
@@ -92,7 +93,7 @@ namespace Rentit.DAL
                 Img_URL = "user7.jpg"
 
             },
-            new User
+            new Client
             {
                 Id=8,
                 FName = "David",
@@ -104,7 +105,7 @@ namespace Rentit.DAL
                 Img_URL = "user8.jpg"
 
             },
-            new User
+            new Client
             {
                 Id=9,
                 FName = "Emma",
@@ -117,7 +118,7 @@ namespace Rentit.DAL
 
 
             },
-            new User
+            new Client
             {
                 Id=10,
                 FName = "James",
@@ -526,7 +527,7 @@ namespace Rentit.DAL
                 };
             #endregion
             modelBuilder.Entity<UserRole>().HasData(userroles);
-            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<Client>().HasData(users);
             modelBuilder.Entity<Governate>().HasData(governs);
             modelBuilder.Entity<Location>().HasData(locations);
             modelBuilder.Entity<PlaceType>().HasData(placetypes);
@@ -562,8 +563,9 @@ namespace Rentit.DAL
                 .WithMany()
                 .HasForeignKey(s => s.Request_StateID_Host)
                 .OnDelete(DeleteBehavior.NoAction);
+            base.OnModelCreating(modelBuilder); 
         }
-        public DbSet<User> Users => Set<User>();
+        public DbSet<Client> Users => Set<Client>();
         public DbSet<UserRole> Roles => Set<UserRole>();
         public DbSet<Propertyy> Properties => Set<Propertyy>();
         public DbSet<Governate> Governs => Set<Governate>();

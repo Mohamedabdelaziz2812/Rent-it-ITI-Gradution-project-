@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Rentit.DAL
 {
-    public class User
+    public class Client
     {
         public int Id { get; set; }
         public string FName { get; set; } = string.Empty;
@@ -11,7 +11,7 @@ namespace Rentit.DAL
         public string Email { get; set; } = string.Empty;
         public string Img_URL { get; set; } =string.Empty;      
         public DateTime JoinedDate { get; set; }
-        public DateTime Start_HostingDate { get; set; }
+        public DateTime? Start_HostingDate { get; set; }
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public UserRole Role { get; set; } = null!;

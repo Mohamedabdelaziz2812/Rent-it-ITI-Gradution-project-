@@ -8,7 +8,7 @@ namespace Rentit.DAL
         public int Id { get; set; }
         [ForeignKey("User")]
         public int UserID { get; set; }
-        public User User { get; set; } = null!;
+        public Client User { get; set; } = null!;
         [ForeignKey("Request_state")]
         public int Request_StateID { get; set; }
         public RequestState Request_state { get; set; } = null!;

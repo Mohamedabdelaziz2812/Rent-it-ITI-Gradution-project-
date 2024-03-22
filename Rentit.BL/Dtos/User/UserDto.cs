@@ -13,7 +13,7 @@ namespace Rentit.BL.Dtos
         public string Email { get; set; }= string.Empty;
         public string Image_URL { get; set; } = string.Empty;
         public DateTime JoinedDate { get; set; }
-        public DateTime Start_HostingDate { get; set; }
+        public DateTime? Start_HostingDate { get; set; }
         public string Role {  get; set; }   = string.Empty; 
         public int RoleId { get; set; } 
         public List<RequestRentReadDto> RequestsRent { get; set; } = new();

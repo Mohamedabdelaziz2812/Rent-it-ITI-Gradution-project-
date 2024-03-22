@@ -25,7 +25,7 @@ namespace Rentit.BL
         public bool AcceptByAdmin(int propertyid)
         {
             RequestRent? request = requestrentRepo.GetByID(propertyid);
-            if (request == null || request.Request_StateID_Host != 2)
+            if (request == null || request.Request_StateID_Host != 2) { return false; } 
             request.Request_StateID_Admin = 2;
             request.Message = "Your Request For Renting your property is accecpted ";
             request.Property.StateId = 3;

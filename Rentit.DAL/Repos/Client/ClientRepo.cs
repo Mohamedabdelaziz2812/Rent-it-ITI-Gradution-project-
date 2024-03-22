@@ -7,16 +7,21 @@ using System.Threading.Tasks;
 
 namespace Rentit.DAL
 {
-    public class UserRepo : IUserRepo
+    public class ClientRepo : IClientRepo
     {
         private readonly MyContext context;
 
-        public UserRepo(MyContext _context)
+        public ClientRepo(MyContext _context)
         {
             this.context = _context;    
         }
 
-        public User? GetUserDetails(int id)
+        public void AddUser(Client user)
+        {
+            context.Users.Add(user);      
+        }
+
+        public Client? GetUserDetails(int id)
         {
             return context.Users
                 .Include(u => u.Role)
@@ -49,6 +54,11 @@ namespace Rentit.DAL
                 .Include(u=>u.Properties)   
                   .ThenInclude(u=>u.Attributes)
                 .FirstOrDefault(u => u.Id == id); 
+        }
+
+        public int SaveChanges()
+        {
+            return context.SaveChanges();  
         }
     }
 }
