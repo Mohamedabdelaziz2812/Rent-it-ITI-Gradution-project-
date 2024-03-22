@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rentit.BL;
 using Rentit.BL.Dtos;
@@ -24,14 +25,12 @@ namespace Rentit.APIs.Controllers
             this.PropertyRepo = _propertyRepo;  
 
         }
-
         [HttpGet]
         public ActionResult<List<ListPropertyReadDto>> GetAll()
         {
             return PropertyManager.GetAll().ToList();    
         }
-        
-  
+
         [HttpPut]
         public ActionResult Update (PropertyUpdateDto PropToUpdate)
         {
@@ -49,7 +48,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
-        [Route("/Details/{id}")]
+        [Route("Details/{id}")]
         public ActionResult<PropertyReadDetailsDto> GetPropertyDetails (int id) 
         {
             PropertyReadDetailsDto? property = PropertyManager.GetPropertyDetails(id);
@@ -58,7 +57,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPost]
-        [Route("/Rent/{propertyid}")]
+        [Route("Rent/{propertyid}")]
         public ActionResult Rent([FromBody] RequestRentAddDto ReqToAdd, [FromRoute] int propertyid)
         {
            var IsFound = requestRentManager.AddRequest(ReqToAdd, propertyid);

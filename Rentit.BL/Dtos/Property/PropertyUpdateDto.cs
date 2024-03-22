@@ -9,7 +9,6 @@ namespace Rentit.BL.Dtos
 {
     public class PropertyUpdateDto
     {
-        public int Id { get; set; }
         public string Property_Name { get; set; } = string.Empty;
         public int Nighly_Price { get; set; }
         public string Description { get; set; } = string.Empty;

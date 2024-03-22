@@ -8,17 +8,26 @@ using System.Threading.Tasks;
 
 namespace Rentit.BL
 {
-    public class UserManager : IUserManager
+    public class ClientManager : IClientManager
     {
-        private readonly IUserRepo UserRepo;
+        private readonly IClientRepo UserRepo;
 
-        public UserManager(IUserRepo _UserRepo)
+        public ClientManager(IClientRepo _UserRepo)
         {
             this.UserRepo = _UserRepo;
         }
+
+        public bool AddUser(Client user)
+        {
+            UserRepo.AddUser(user);
+            UserRepo.SaveChanges(); 
+            return true;
+        }
+       
+
         public UserDto GetUserDetails(int id)
         {
-            User user = UserRepo.GetUserDetails(id);
+            Client user = UserRepo.GetUserDetails(id);
 
             return new UserDto
             {
@@ -119,6 +128,11 @@ namespace Rentit.BL
                     }).ToList(),
                 }).ToList()
             };
+        }
+
+        public int SaveChanges()
+        {
+            return UserRepo.SaveChanges();
         }
     }
 }

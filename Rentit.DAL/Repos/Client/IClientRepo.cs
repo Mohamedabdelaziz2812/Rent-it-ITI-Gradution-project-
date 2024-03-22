@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Rentit.DAL
 {
-    public interface IUserRepo
+    public interface IClientRepo
     {
-        User GetUserDetails (int id);  
-        
+        Client GetUserDetails (int id);  
+
+        void AddUser (Client user);
+        int SaveChanges();
+
+
 
     }
 }

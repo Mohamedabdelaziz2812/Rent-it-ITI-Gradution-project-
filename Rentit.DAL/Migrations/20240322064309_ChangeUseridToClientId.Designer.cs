@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rentit.DAL;
 
@@ -11,9 +12,11 @@ using Rentit.DAL;
 namespace Rentit.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240322064309_ChangeUseridToClientId")]
+    partial class ChangeUseridToClientId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,6 +229,8 @@ namespace Rentit.DAL.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientiD");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -1596,6 +1601,15 @@ namespace Rentit.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Account", b =>
+                {
+                    b.HasOne("Rentit.DAL.Client", "user")
+                        .WithMany()
+                        .HasForeignKey("ClientiD");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Rentit.DAL.Attributes", b =>

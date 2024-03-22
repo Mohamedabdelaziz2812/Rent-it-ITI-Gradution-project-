@@ -10,10 +10,10 @@ namespace Rentit.DAL
         public int Id { get; set; }
         [ForeignKey("User")]
         public int UserID { get; set; }
-        public User User { get; set; } = null!;
+        public Client User { get; set; } = null!;
         [ForeignKey("Host")]
         public int HostID { get; set; }
-        public User Host { get; set; } = null!;
+        public Client Host { get; set; } = null!;
         [ForeignKey("Property")]
         public int PropertyId { get; set; }
         public Propertyy Property { get; set; } = null!;

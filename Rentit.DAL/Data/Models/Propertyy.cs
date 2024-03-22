@@ -29,7 +29,7 @@ namespace Rentit.DAL
         public PropertyStates Property_States { get; set; } = null!;
         [ForeignKey("User")]
         public int HostId { get; set; }
-        public User User { get; set; } = null!;
+        public Client User { get; set; } = null!;
         public ICollection<Image> Property_imgs { get; set; } = new HashSet<Image>();
         public ICollection<Attributes> Attributes { get; set; } = new HashSet<Attributes>();
         public ICollection<RequestRent> RequestRents { get; set; } = new HashSet<RequestRent>();

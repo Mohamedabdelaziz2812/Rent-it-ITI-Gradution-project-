@@ -10,7 +10,7 @@ namespace Rentit.DAL
         public int Id { get; set; }
         [ForeignKey("User")]
         public int? Userid { get; set; }
-        public User User { get; set; } = null!;
+        public Client User { get; set; } = null!;
         [ForeignKey("Property")]
         public int? PropertyID { get; set; }
         public Propertyy Property { get; set; } = null!;

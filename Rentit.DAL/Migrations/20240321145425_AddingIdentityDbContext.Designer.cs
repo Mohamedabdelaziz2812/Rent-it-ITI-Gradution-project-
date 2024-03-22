@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rentit.DAL;
 
@@ -11,9 +12,11 @@ using Rentit.DAL;
 namespace Rentit.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240321145425_AddingIdentityDbContext")]
+    partial class AddingIdentityDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,9 +181,6 @@ namespace Rentit.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClientiD")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -225,6 +225,9 @@ namespace Rentit.DAL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("UseriD")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -234,6 +237,8 @@ namespace Rentit.DAL.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("UseriD");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -356,7 +361,7 @@ namespace Rentit.DAL.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Start_HostingDate")
+                    b.Property<DateTime>("Start_HostingDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1596,6 +1601,15 @@ namespace Rentit.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Account", b =>
+                {
+                    b.HasOne("Rentit.DAL.Client", "user")
+                        .WithMany()
+                        .HasForeignKey("UseriD");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Rentit.DAL.Attributes", b =>
