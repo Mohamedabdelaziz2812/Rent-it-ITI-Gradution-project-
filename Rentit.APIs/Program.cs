@@ -41,6 +41,17 @@ namespace Rentit.APIs
 
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
 
+            builder.Services.AddAuthorization(options =>
+            {
+                // awel policy feeh 2 claims aw 2 requirments kol policy w leeha el shroot bet3ta 
+                options.AddPolicy("AdminRole", policy =>
+                policy.RequireClaim(ClaimTypes.Role, "Admin"));
+
+                options.AddPolicy("UserRole", policy =>
+               policy.RequireClaim(ClaimTypes.Role, "User"));
+
+            });
+
 
             builder.Services.AddIdentity<Account, IdentityRole>(options =>
             {
@@ -81,8 +92,6 @@ namespace Rentit.APIs
                 };
             });
 
-            
-
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -96,7 +105,6 @@ namespace Rentit.APIs
 
             app.UseAuthentication();
             app.UseRouting();
-
 
             app.UseAuthorization();
 

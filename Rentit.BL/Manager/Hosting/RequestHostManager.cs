@@ -38,11 +38,11 @@ namespace Rentit.BL
             return true;
         }
 
-        public bool AddRequestHost(PropertyAddDto propertyAdd)
+        public bool AddRequestHost(PropertyAddDto propertyAdd,int userid)
         {
             RequestHost addrequestHost = new()
             {
-                UserID = propertyAdd.HostId,
+                UserID = userid,
                 Request_StateID = 1,
                 Property_Name = propertyAdd.Property_Name,
                 Nighly_Price = propertyAdd.Nighly_Price,

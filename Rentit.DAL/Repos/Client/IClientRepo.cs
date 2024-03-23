@@ -9,11 +9,7 @@ namespace Rentit.DAL
     public interface IClientRepo
     {
         Client GetUserDetails (int id);  
-
         void AddUser (Client user);
         int SaveChanges();
-
-
-
     }
 }

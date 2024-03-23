@@ -55,7 +55,6 @@ namespace Rentit.BL
             propertyRepo.SaveChanges();
             return true;
         }
-
         public bool Delete(int id)
         {
            Propertyy? property = propertyRepo.GetByID(id);
@@ -64,7 +63,6 @@ namespace Rentit.BL
             propertyRepo.SaveChanges();
             return true;    
         }
-
         public IEnumerable<ListPropertyReadDto> GetAll()
         {
             DateTime TodayTime = DateTime.Now;  
