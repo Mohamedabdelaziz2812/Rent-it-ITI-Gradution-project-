@@ -51,23 +51,50 @@ namespace Rentit.APIs.Controllers
             PropertyManager.Add(id);
             return Created();
         }
+        [HttpPut]
+        [Route("Cancel/{id}")]
+        public ActionResult CancelRequestHost(int id)
+        {
+            var IsFound = requestHostManager.CancelHostRequestByAdmin(id);
+            if (!IsFound) { return NotFound("Cant find the request please add your request for hosting"); }
+        
+            return Ok();
+        }
 
         [HttpPut]
-        [Route("User/{id}")]
+        [Route("AcceptRentHost/{id}")]
         public ActionResult AcceptRentRequestbyHost(int id) 
         {
             var IsFound =  requestRentManager.AcceptByHost(id);
             if (!IsFound) { return NotFound("Cant find the property"); }
             return Ok();
         }
-        
+
         [HttpPut]
-        [Route("Admin/{id}")]
-        public ActionResult AcceptRentRequest(int id)
+        [Route("CancelRentHost/{id}")]
+        public ActionResult CancelRentRequestbyHost(int id)
+        {
+            var IsFound = requestRentManager.CancelByHost(id);
+            if (!IsFound) { return NotFound("Cant find the property"); }
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("AcceptRentAdmin/{id}")]
+        public ActionResult AcceptRentRequestByAdmin(int id)
         {
           var IsFound =   requestRentManager.AcceptByAdmin(id);
             if (!IsFound) { return BadRequest("Cant find the request or the host acceptence still pending"); }
             return Created();
+        }
+
+        [HttpPut]
+        [Route("CancelRentAdmin/{id}")]
+        public ActionResult CancelRentRequestByAdmin(int id)
+        {
+            var IsFound = requestRentManager.CancelByAdmin(id);
+            if (!IsFound) { return BadRequest("Cant find the request"); }
+            return Ok();
         }
 
         [HttpGet]

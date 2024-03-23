@@ -17,6 +17,8 @@ namespace Rentit.BL
 
         bool AddRequest (RequestRentAddDto item , int propertyid); 
         bool AcceptByHost (int propertyid);
+        bool CancelByHost(int propertyid);
         bool AcceptByAdmin(int propertyid);
+        bool CancelByAdmin(int propertyid);
     }
 }
