@@ -25,6 +25,7 @@ namespace Rentit.APIs.Controllers
             this.PropertyRepo = _propertyRepo;  
 
         }
+        [Authorize]
         [HttpGet]
         public ActionResult<List<ListPropertyReadDto>> GetAll()
         {

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Rentit.BL;
 using Rentit.DAL;
+using System.Security.Claims;
 using System.Text;
 
 namespace Rentit.APIs
@@ -39,6 +40,7 @@ namespace Rentit.APIs
             builder.Services.AddScoped<IClientManager, ClientManager>();    
 
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
+           
 
             builder.Services.AddIdentity<Account, IdentityRole>(options =>
             {
@@ -52,7 +54,7 @@ namespace Rentit.APIs
                 //2qsa mn keda han2fel el account beta3to lmodet 2 mins
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
 
-            }).AddEntityFrameworkStores<MyContext>();
+            }).AddEntityFrameworkStores<MyContext>().AddDefaultTokenProviders();
             //el mohskla dalw2ty b override N el authntication beta3k cookie authenictcation w e7na 3ayzeen token 
 
             builder.Services.AddDbContext<MyContext>(options =>
@@ -90,11 +92,19 @@ namespace Rentit.APIs
             }
 
             app.UseHttpsRedirection();
+
+
             app.UseAuthentication();
+            app.UseRouting();
+
+
             app.UseAuthorization();
 
-
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+            //app.MapControllers();
 
             app.Run();
         }

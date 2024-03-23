@@ -83,7 +83,7 @@ namespace Rentit.APIs.Controllers
             //generate token 
             var userclaims = await userManager.GetClaimsAsync(account);
             // choosing Hashing aloghrithim
-            var secertKey = configuration.GetValue<string>("Secertkey");
+            string? secertKey = configuration.GetValue<string>("Secertkey");
             var secertKeyInBytes = Encoding.ASCII.GetBytes(secertKey);
             //instal identity.Tokens laibrary  
             var key = new SymmetricSecurityKey(secertKeyInBytes);
