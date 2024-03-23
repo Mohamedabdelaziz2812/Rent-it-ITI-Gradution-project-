@@ -71,10 +71,12 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "UserRole")]
         [Route("AddReview/{PropertyId}")]
         public ActionResult AddReview(ReviewAddDto review, int PropertyId)
         {
-            PropertyManager.AddReview(review, PropertyId);
+            int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            PropertyManager.AddReview(review, PropertyId,userid);
             return Ok();
         }
        

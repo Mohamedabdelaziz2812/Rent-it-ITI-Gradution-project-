@@ -206,14 +206,14 @@ namespace Rentit.BL
             return true;
         }
 
-        public void AddReview(ReviewAddDto review, int propertyid)
+        public void AddReview(ReviewAddDto review, int propertyid, int userid)
         {
             UserReview userReview = new UserReview()
             {
                 Comment = review.Review,
                 Review_date = DateTime.Now, 
                 PropertyID = propertyid,    
-                Userid = review.id               
+                Userid = userid           
             };
             propertyRepo.AddReview(userReview);
             propertyRepo.SaveChanges();

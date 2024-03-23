@@ -8,7 +8,6 @@ namespace Rentit.BL.Dtos;
 
 public class ReviewAddDto
 {
-    public int id { get; set; }
     public string Review { get; set; } = string.Empty;
 
 }
