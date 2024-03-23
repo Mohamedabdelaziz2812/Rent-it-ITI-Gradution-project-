@@ -70,20 +70,20 @@ namespace Rentit.BL
 
         }
 
-        public bool AddRequest(RequestRentAddDto item, int propertyid)
+        public bool AddRequest(RequestRentAddDto item, int propertyid,int Userid)
         {
             Propertyy? property = propertyRepo.GetByID(propertyid);
             if (property == null) { return false; }
             if (property.StateId != 1) { return false; }
             if (item.NumOfGuests > property.Nums_Guests) { return false; }
-            if (item.UserId == property.HostId) { return false; }
+            if (Userid == property.HostId) { return false; }
             TimeSpan timeSpan = item.Checkout_date - item.Checkin_date;
             int difference = Math.Abs(timeSpan.Days);
             double WebFee = (item.ServiceFee + (property.Nighly_Price * difference)) * 0.15;
             double total = WebFee + (property.Nighly_Price * difference) + item.ServiceFee;
             RequestRent addrequestrent = new()
             {
-                UserID = item.UserId,
+                UserID = Userid,
                 HostID = property.HostId,
                 PropertyId = property.Id,
                 Request_StateID_Host = 1,

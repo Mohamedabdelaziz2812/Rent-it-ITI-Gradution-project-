@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rentit.BL;
 using Rentit.BL.Dtos;
 using Rentit.DAL;
+using System.Security.Claims;
 
 namespace Rentit.APIs.Controllers
 {
@@ -26,10 +27,12 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public ActionResult<UserDto> GetUserById(int id) 
+        [Authorize(Policy ="UserRole")]
+        [Route("UserInfo")]
+        public ActionResult<UserDto> GetUserDetails() 
         {
-            UserDto? user = UserManager.GetUserDetails(id); 
+            int userid = Convert.ToInt32( HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)); 
+            UserDto? user = UserManager.GetUserDetails(userid); 
             if (user == null) { return NotFound(); }
             return user;
         }
@@ -44,14 +47,17 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "UserRole")]
         [Route("Host")]
         public ActionResult AddRequestHost(PropertyAddDto PropToAdd) 
         {
-            var newId = requestHostManager.AddRequestHost(PropToAdd);
+            int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var newId = requestHostManager.AddRequestHost(PropToAdd,userid);
             return Ok();
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminRole")]
         [Route("Add/{id}")]
         public ActionResult AcceptRequestHost(int id) 
         {
@@ -60,7 +66,9 @@ namespace Rentit.APIs.Controllers
             PropertyManager.Add(id);
             return Created();
         }
+
         [HttpPut]
+        [Authorize(Policy = "AdminRole")]
         [Route("Cancel/{id}")]
         public ActionResult CancelRequestHost(int id)
         {
@@ -71,6 +79,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "UserRole")]
         [Route("AcceptRentHost/{id}")]
         public ActionResult AcceptRentRequestbyHost(int id) 
         {
@@ -80,6 +89,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "UserRole")]
         [Route("CancelRentHost/{id}")]
         public ActionResult CancelRentRequestbyHost(int id)
         {
@@ -89,6 +99,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "AdminRole")]
         [Route("AcceptRentAdmin/{id}")]
         public ActionResult AcceptRentRequestByAdmin(int id)
         {
@@ -98,6 +109,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "AdminRole")]
         [Route("CancelRentAdmin/{id}")]
         public ActionResult CancelRentRequestByAdmin(int id)
         {
@@ -107,6 +119,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminRole")]
         [Route("Rent")]
         public ActionResult<List<RequestRentReadDto>> GetAllRentRequests()
         {
@@ -114,6 +127,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminRole")]
         [Route("Host")]
         public ActionResult<List<RequestHostReadDto>> GetAllHostRequest()
         {

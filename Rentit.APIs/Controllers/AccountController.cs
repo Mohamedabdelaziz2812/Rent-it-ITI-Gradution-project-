@@ -79,7 +79,6 @@ namespace Rentit.APIs.Controllers
                 await userManager.AccessFailedAsync(account);
                 return Unauthorized("Wrong credentials");
             }
-
             //generate token 
             var userclaims = await userManager.GetClaimsAsync(account);
             // choosing Hashing aloghrithim

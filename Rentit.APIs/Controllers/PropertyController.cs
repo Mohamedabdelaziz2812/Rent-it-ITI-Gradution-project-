@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rentit.BL;
 using Rentit.BL.Dtos;
 using Rentit.DAL;
+using System.Security.Claims;
 
 namespace Rentit.APIs.Controllers
 {
@@ -25,7 +26,6 @@ namespace Rentit.APIs.Controllers
             this.PropertyRepo = _propertyRepo;  
 
         }
-        [Authorize]
         [HttpGet]
         public ActionResult<List<ListPropertyReadDto>> GetAll()
         {
@@ -33,6 +33,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "UserRole")]
         public ActionResult Update (PropertyUpdateDto PropToUpdate)
         {
             var isFound = PropertyManager.Update(PropToUpdate);
@@ -40,7 +41,8 @@ namespace Rentit.APIs.Controllers
               return NoContent();   
         }
 
-        [HttpDelete]    
+        [HttpDelete]
+        [Authorize(Policy = "UserRole")]
         public ActionResult Delete(int id)
         {
             var isFound = PropertyManager.Delete(id);
@@ -58,19 +60,23 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy ="UserRole")]
         [Route("Rent/{propertyid}")]
         public ActionResult Rent([FromBody] RequestRentAddDto ReqToAdd, [FromRoute] int propertyid)
         {
-           var IsFound = requestRentManager.AddRequest(ReqToAdd, propertyid);
+            int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var IsFound = requestRentManager.AddRequest(ReqToAdd, propertyid,userid);
             if (!IsFound) { return BadRequest("Invalid Entry check your user id or you number of guests"); }    
             return Ok();
         }
 
         [HttpPost]
+        [Authorize(Policy = "UserRole")]
         [Route("AddReview/{PropertyId}")]
         public ActionResult AddReview(ReviewAddDto review, int PropertyId)
         {
-            PropertyManager.AddReview(review, PropertyId);
+            int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            PropertyManager.AddReview(review, PropertyId,userid);
             return Ok();
         }
        
