@@ -166,7 +166,7 @@ namespace Rentit.BL
                 State = property.Property_States.Name,
                 HostId = property.User.Id,
                 HostName = $"{property.User.FName} {property.User.LName}",
-                Host_image=property.User.Img_URL,
+                Host_image = property.User.Img_URL,
                 location = loc,
                 Images = property.Property_imgs.Select(i => new ImageChildDto
                 {
@@ -176,10 +176,17 @@ namespace Rentit.BL
                 }).ToList(),
 
                 attributes = property.Attributes.Select(a => new AttributesChildDto
-                { Id = a.Id, Name = a.Name, Icon_Url = a.Icon_Url }).ToList()
+                { Id = a.Id, Name = a.Name, Icon_Url = a.Icon_Url }).ToList(),
 
+                UserReviews = property.UserReviews.Select(r => new ReviewReadDto
+                {
+                    Client_Name = $"{r.User.FName}+{r.User.LName}",
+                    Review = r.Comment,
+                    Img_Url = r.User.Img_URL
+                }).ToList()
             };
         }
+
 
         public bool Update(PropertyUpdateDto propertyUpdate)
         {
@@ -201,6 +208,18 @@ namespace Rentit.BL
             return true;
         }
 
-      
+        public void AddReview(ReviewAddDto review, int propertyid)
+        {
+            UserReview userReview = new UserReview()
+            {
+                Comment = review.Review,
+                Review_date = DateTime.Now, 
+                PropertyID = propertyid,    
+                Userid = review.id               
+            };
+            propertyRepo.AddReview(userReview);
+            propertyRepo.SaveChanges();
+        }
+
     }
 }

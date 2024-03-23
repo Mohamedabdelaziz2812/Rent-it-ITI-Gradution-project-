@@ -18,8 +18,7 @@ namespace Rentit.DAL
         int SaveChanges();
         Propertyy? GetPropertyWithImagesAndAttributs(int id);
         IEnumerable<Propertyy> GetPropertiesForUser(int id);
-
-
+        void AddReview(UserReview review);
 
     }
 }

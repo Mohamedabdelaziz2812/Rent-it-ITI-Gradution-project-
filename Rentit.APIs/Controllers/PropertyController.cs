@@ -65,6 +65,14 @@ namespace Rentit.APIs.Controllers
             if (!IsFound) { return BadRequest("Invalid Entry check your user id or you number of guests"); }    
             return Ok();
         }
+
+        [HttpPost]
+        [Route("AddReview/{PropertyId}")]
+        public ActionResult AddReview(ReviewAddDto review, int PropertyId)
+        {
+            PropertyManager.AddReview(review, PropertyId);
+            return Ok();
+        }
        
     }
 }
