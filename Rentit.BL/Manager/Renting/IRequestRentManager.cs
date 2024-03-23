@@ -13,8 +13,6 @@ namespace Rentit.BL
         IEnumerable<RequestRentReadDto> GetAllForAdmin();
         IEnumerable<RequestRentReadDto> GetAllForUser(int id);
         IEnumerable<RequestRentReadDto> GetAllForHost(int id);
-      
-
         bool AddRequest (RequestRentAddDto item , int propertyid); 
         bool AcceptByHost (int propertyid);
         bool CancelByHost(int propertyid);
