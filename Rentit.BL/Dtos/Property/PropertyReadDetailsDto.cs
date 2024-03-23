@@ -28,5 +28,7 @@ namespace Rentit.BL.Dtos
 
         public List<ImageChildDto> Images { get; set; } = new();
         public List<AttributesChildDto> attributes { get; set; } = new();
+        public List<ReviewReadDto> UserReviews { get; set; } = new();
+
     }
 }

@@ -10,6 +10,8 @@ namespace Rentit.DAL
     {
         Client GetUserDetails (int id);  
         void AddUser (Client user);
+        void UpdateUser(Client user);
+
         int SaveChanges();
     }
 }

@@ -37,6 +37,15 @@ namespace Rentit.APIs.Controllers
             return user;
         }
 
+        [HttpPut]
+        [Route("UpdateUser/{id}")]
+        public ActionResult UpdateUser (UserUpdateDto UserDto)
+        {
+            var IsFound = UserManager.UpdateUser(UserDto);
+            if (!IsFound) { return NotFound(); }
+            return Ok("User Updated Successfully");
+        }
+
         [HttpPost]
         [Authorize(Policy = "UserRole")]
         [Route("Host")]

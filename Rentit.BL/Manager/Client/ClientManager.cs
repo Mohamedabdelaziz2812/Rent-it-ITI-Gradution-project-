@@ -3,6 +3,7 @@ using Rentit.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +24,22 @@ namespace Rentit.BL
             UserRepo.SaveChanges(); 
             return true;
         }
-       
 
-        public UserDto GetUserDetails(int id)
+       public bool UpdateUser(UserUpdateDto UserFromRequest)
+        {
+            Client? User = UserRepo.GetUserDetails(UserFromRequest.Id);
+            if (User  == null) { return false; }
+            User.FName = UserFromRequest.FName;
+            User.LName = UserFromRequest.LName;
+            User.Email = UserFromRequest.Email;
+            User.Img_URL = UserFromRequest.Image_URL;
+            //for tracking method
+            UserRepo.UpdateUser(User);
+            UserRepo.SaveChanges();
+            return true;
+        }
+
+            public UserDto GetUserDetails(int id)
         {
             Client user = UserRepo.GetUserDetails(id);
 

@@ -20,6 +20,9 @@ namespace Rentit.DAL
         {
             context.Users.Add(user);      
         }
+        public void UpdateUser(Client user)
+        {
+        }
 
         public Client? GetUserDetails(int id)
         {

@@ -22,6 +22,8 @@ namespace Rentit.DAL
         {
            context.Locations.Add(location);
         }
+
+
         public void Delete(Propertyy property)
         {
            context.Properties.Remove(property); 
@@ -63,8 +65,11 @@ namespace Rentit.DAL
                 .Include(p=>p.Property_States)
                 .Include(p=>p.Location)
                 .ThenInclude(x => x.Governate)
+                .Include(p=>p.UserReviews)
                 .FirstOrDefault(p=>p.Id == id);    
         }
+
+
         public int SaveChanges()
         {
              return context.SaveChanges();  
@@ -72,6 +77,10 @@ namespace Rentit.DAL
         public void Update(Propertyy property)
         {
             context.Properties.Update(property);   
+        }
+        public void AddReview(UserReview review)
+        {
+            context.Set<UserReview>().Add(review);
         }
     }
 }
