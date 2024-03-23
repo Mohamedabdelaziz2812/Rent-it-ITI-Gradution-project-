@@ -40,7 +40,7 @@ namespace Rentit.APIs
             builder.Services.AddScoped<IClientManager, ClientManager>();    
 
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
-           
+
 
             builder.Services.AddIdentity<Account, IdentityRole>(options =>
             {
@@ -54,7 +54,7 @@ namespace Rentit.APIs
                 //2qsa mn keda han2fel el account beta3to lmodet 2 mins
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
 
-            }).AddEntityFrameworkStores<MyContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<MyContext>();
             //el mohskla dalw2ty b override N el authntication beta3k cookie authenictcation w e7na 3ayzeen token 
 
             builder.Services.AddDbContext<MyContext>(options =>
@@ -100,11 +100,8 @@ namespace Rentit.APIs
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            //app.MapControllers();
+
+            app.MapControllers();
 
             app.Run();
         }
