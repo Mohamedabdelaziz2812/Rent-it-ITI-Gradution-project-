@@ -8,7 +8,6 @@ namespace Rentit.BL.Dtos
 {
     public class RequestRentAddDto
     {
-        public int UserId { get; set; }  
         public DateTime Checkin_date { get; set; }
         public DateTime Checkout_date { get; set; }
         public int ServiceFee { get; set; }
