@@ -16,8 +16,8 @@ namespace Rentit.BL
         bool Update (PropertyUpdateDto propertyUpdate);
         bool Delete(int id);
         PropertyReadDetailsDto? GetPropertyDetails (int id);
-
-         
+        void AddReview(ReviewAddDto review, int propertyid);
+      
 
     }
 }
