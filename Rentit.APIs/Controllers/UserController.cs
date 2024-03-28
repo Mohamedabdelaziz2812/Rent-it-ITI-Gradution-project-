@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Rentit.BL;
 using Rentit.BL.Dtos;
 using Rentit.DAL;
@@ -17,13 +18,16 @@ namespace Rentit.APIs.Controllers
         private readonly IRequestHostManger requestHostManager;
         private readonly IPropertyManager PropertyManager;
         private readonly IRequestRentManager requestRentManager;
+        private readonly IClientRepo ClientRepo;
+
         public UserController(IClientManager _userManager ,IRequestHostManger _RequestHostManager
-            ,IPropertyManager _PropertyManager , IRequestRentManager _requestRentManager)
+            ,IPropertyManager _PropertyManager , IRequestRentManager _requestRentManager,IClientRepo _ClientRepo)
         {
             this.UserManager = _userManager;   
             this.requestHostManager = _RequestHostManager;
             this.PropertyManager = _PropertyManager;
             this.requestRentManager = _requestRentManager;
+            this.ClientRepo = _ClientRepo;  
         }
 
         [HttpGet]
@@ -48,12 +52,71 @@ namespace Rentit.APIs.Controllers
 
         [HttpPost]
         [Authorize(Policy = "UserRole")]
-        [Route("Host")]
-        public ActionResult AddRequestHost(PropertyAddDto PropToAdd) 
+        [Route("RequestHost")]
+        public async Task<ActionResult> Upload(UploadRequestHostDto requestHost)
+        {
+
+            PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);
+            var AllowedExtensions = new string[] { ".png", ".jpg", ".svg" };
+            var MaxFileSize = 4_000_000; // 4 MB
+
+            List<string> uploadedFiles = new List<string>();
+
+            for (int i = 0; i < requestHost.imgs.Count; i++)
+            {
+                // Check extension
+                var extension = Path.GetExtension(requestHost.imgs[i].FileName);
+                if (!AllowedExtensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    return BadRequest("Extension is not valid");
+                }
+
+                // Check file size
+                if (requestHost.imgs[i].Length > MaxFileSize)
+                {
+                    return BadRequest("File size exceeds the maximum allowed size of 4 MB");
+                }
+
+                // Generate unique file name
+                var newFileName = $"{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}";
+
+                // Save the file
+                using (var stream = new FileStream($"Assets/PropertiesImages/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
+                {
+                    await requestHost.imgs[i].CopyToAsync(stream);
+                }
+
+                ImageToAddRequestHostDto img = new ImageToAddRequestHostDto
+                {
+                    Img_URL = newFileName,
+                    Img_order = (i + 1),
+                };
+                PropToAdd?.imageToAddRequestHostDtos.Add(img);
+            }
+            int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            requestHostManager.AddRequestHost(PropToAdd, userid);
+            return Ok();
+        }
+        [HttpPut]
+        [Authorize(Policy = "UserRole")]
+        [Route("Userimg")]
+        public async Task<ActionResult<UserImgDto>> UploadFileDTO([FromForm] IFormFile Clientimg)
         {
             int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var newId = requestHostManager.AddRequestHost(PropToAdd,userid);
-            return Ok();
+            Client? client = ClientRepo.GetUserDetails(userid);
+            var imgURL = "";
+            if (Clientimg != null)
+            {
+                string fileext = Clientimg.FileName.Split('.').Last();
+                using (var fs = new FileStream($"Assets/UserImages/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
+                {
+                    await Clientimg.CopyToAsync(fs);
+                    imgURL = client.Img_URL = $"{client.FName}{client.LName}{client.Id}.{fileext}";
+                }
+                UserManager.EditCLientImg(imgURL, client);
+                return Ok(new UserImgDto(true, "Sucess", imgURL));
+            }
+            else { return BadRequest(new UserImgDto(false, "Failed", " ")); }
         }
 
         [HttpPost]

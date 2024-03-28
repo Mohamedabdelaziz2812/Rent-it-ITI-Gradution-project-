@@ -13,6 +13,7 @@ namespace Rentit.BL
         UserDto GetUserDetails (int id);  
         bool AddUser (Client user);
         bool UpdateUser (UserUpdateDto user);
+        bool EditCLientImg(string fileext, Client client);
         int SaveChanges();
     }
 }

@@ -38,7 +38,7 @@ namespace Rentit.BL
             return true;
         }
 
-        public bool AddRequestHost(PropertyAddDto propertyAdd,int userid)
+        public bool AddRequestHost(PropertyAddDto propertyAdd, int userid)
         {
             RequestHost addrequestHost = new()
             {
@@ -59,10 +59,21 @@ namespace Rentit.BL
                 City = propertyAdd.City,
                 District_name = propertyAdd.District_name,
                 Location_url = propertyAdd.Location_url,
-                GovernateId = propertyAdd.GovernateId
+                GovernateId = propertyAdd.GovernateId,
             };
             requestHostRepo.Add(addrequestHost);
             requestHostRepo.SaveChanges();
+            foreach (var item in propertyAdd.imageToAddRequestHostDtos)
+            {
+                ImgesForRequest imgrequest = new ImgesForRequest()
+                {
+                    Img_URL = item.Img_URL,
+                    Img_order = item.Img_order,
+                    Request_HostId = addrequestHost.Id
+                };
+                requestHostRepo.AddImagesToRequest(imgrequest);
+                requestHostRepo.SaveChanges();
+            }
             return true;
         }
 

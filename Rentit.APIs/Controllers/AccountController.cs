@@ -28,40 +28,6 @@ namespace Rentit.APIs.Controllers
             clientManager= _clientManager;  
         }
         [HttpPost]
-        [Route("StaticLogin")]
-        public ActionResult<string> StaticLogin(LoginDto Credentials)
-        {
-            if (Credentials.UserName == "admin" && Credentials.Password == "Pass")
-            {
-                //Creating Claims
-                var userclaims = new List<Claim>
-                {
-                    new Claim (ClaimTypes.NameIdentifier, Credentials.UserName),
-                    new Claim (ClaimTypes.Email, $"{Credentials.UserName}@gmail.com"),
-                    new Claim ("Nationality","Egyptian"),
-                };
-
-                // choosing Hashing aloghrithim
-                var secertKey = configuration.GetValue<string>("Secertkey");
-                var secertKeyInBytes = Encoding.ASCII.GetBytes(secertKey);
-                //instal identity.Tokens laibrary  
-                var key = new SymmetricSecurityKey(secertKeyInBytes);
-                var MethodUsedInToken = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                //install install-package System.IdentityModel.Tokens.Jwt
-                var Jwt = new JwtSecurityToken(
-                    claims: userclaims,
-                    notBefore: DateTime.Now,
-                    expires: DateTime.Now.AddMinutes(10),
-                    signingCredentials: MethodUsedInToken);
-                // create token 
-                var tokenhandler = new JwtSecurityTokenHandler();
-                string TokenString = tokenhandler.WriteToken(Jwt);
-                return Ok(TokenString);
-            }
-            return Unauthorized("Wrong ceredentials");
-        }
-
-        [HttpPost]
         [Route("Login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto Credentials)
         {

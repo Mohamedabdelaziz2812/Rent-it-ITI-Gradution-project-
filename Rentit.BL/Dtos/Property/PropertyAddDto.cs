@@ -26,7 +26,8 @@ namespace Rentit.BL.Dtos
         public required int GovernateId { get; set; }
         public required int PlaceType_ID { get; set; }
         public required int PropetyTypeId { get; set; }
-        public required int HostId { get; set; }
+        public List<ImageToAddRequestHostDto> imageToAddRequestHostDtos { get; set; } = new();
+        public List<AttrubutesToAddDto> attrubutesToAddDto { get; set; } = new();    
 
     }
 }

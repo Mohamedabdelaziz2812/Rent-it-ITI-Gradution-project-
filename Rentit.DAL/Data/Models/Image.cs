@@ -13,8 +13,5 @@ namespace Rentit.DAL
         [ForeignKey("Property")]
         public int? PropertyId { get; set; }
         public Propertyy Property { get; set; } = null!;
-        //[ForeignKey("Request_host")]
-        //public int? Request_HostId { get; set; }
-        //public RequestHost Request_host { get; set; }
     }
 }
