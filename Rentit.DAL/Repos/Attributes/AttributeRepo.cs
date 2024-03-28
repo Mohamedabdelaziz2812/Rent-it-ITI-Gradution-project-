@@ -18,7 +18,7 @@ namespace Rentit.DAL
             return context.Attributes.ToList(); 
         }
 
-        public Attributes? GetbyId(int id)
+        public Attributes GetbyId(int id)
         {
             return context.Attributes.FirstOrDefault(a => a.Id == id);
         }

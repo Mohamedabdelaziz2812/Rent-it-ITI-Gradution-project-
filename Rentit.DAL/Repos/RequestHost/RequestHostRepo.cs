@@ -31,7 +31,10 @@ namespace Rentit.DAL
 
         public RequestHost? GetByID(int id)
         {
-            return context.RequestHosts.Include(r=>r.Imgs).Include(r=>r.Attributes_requests).FirstOrDefault(r=>r.Id == id);  
+            return context.RequestHosts
+                .Include(r=>r.Imgs)
+                .Include(r=>r.Attributes_requests)
+                .FirstOrDefault(r=>r.Id == id);  
         }
         public IEnumerable<RequestHost> GetRequestsWithUserId(int id)
         {

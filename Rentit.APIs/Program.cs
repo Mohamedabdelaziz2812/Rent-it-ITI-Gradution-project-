@@ -41,6 +41,8 @@ namespace Rentit.APIs
 
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
 
+            builder.Services.AddScoped<IAttributeRepo, AttributeRepo>();    
+
             builder.Services.AddAuthorization(options =>
             {
                 // awel policy feeh 2 claims aw 2 requirments kol policy w leeha el shroot bet3ta 
