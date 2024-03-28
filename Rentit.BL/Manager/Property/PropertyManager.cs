@@ -52,12 +52,15 @@ namespace Rentit.BL
                 HostId = propertyAdd.UserID,
                 Loc_id = loc.Id,
             };
-            foreach (var item in propertyAdd.Attributes_requests)
-            {
-                property.Attributes_property.Add(item); 
-            }
+           
             propertyRepo.Add(property);
             propertyRepo.SaveChanges();
+            foreach (var item in propertyAdd.Attributes_requests)
+            {
+                property.Attributes_property.Add(item);
+                propertyRepo.SaveChanges();
+
+            }
             foreach (var item in propertyAdd.Imgs)
             {
                 Image Images = new Image()

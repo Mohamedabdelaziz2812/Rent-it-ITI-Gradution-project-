@@ -84,7 +84,7 @@ namespace Rentit.APIs.Controllers
                 Email = registerDTO.Email,  
                 Img_URL = "default.jpg",
                 JoinedDate = DateTime.Now,  
-                RoleId =2 ,
+                RoleId =1 ,
             };
             clientManager.AddUser(UserToAdd);
             Account NewAcc = new Account
@@ -103,7 +103,7 @@ namespace Rentit.APIs.Controllers
             {
             new Claim (ClaimTypes.NameIdentifier,NewAcc.ClientiD.ToString()),
             new Claim (ClaimTypes.Email,NewAcc.Email),
-            new Claim (ClaimTypes.Role,"User"),
+            new Claim (ClaimTypes.Role,"Admin"),
             };
             await userManager.AddClaimsAsync(NewAcc, UserClaims);
 
