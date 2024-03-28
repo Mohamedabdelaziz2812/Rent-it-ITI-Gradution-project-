@@ -53,7 +53,7 @@ namespace Rentit.APIs.Controllers
         [HttpPost]
         [Authorize(Policy = "UserRole")]
         [Route("RequestHost")]
-        public async Task<ActionResult> Upload(UploadRequestHostDto requestHost)
+        public async Task<ActionResult> AddRequestHost(UploadRequestHostDto requestHost)
         {
 
             PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);

@@ -8,11 +8,65 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Rentit.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class m1 : Migration
+    public partial class UpdatedDataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientiD = table.Column<int>(type: "int", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attributes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Icon_Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attributes", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Governs",
                 columns: table => new
@@ -92,6 +146,112 @@ namespace Rentit.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
@@ -125,8 +285,9 @@ namespace Rentit.DAL.Migrations
                     FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Start_HostingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_HostingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -257,6 +418,30 @@ namespace Rentit.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AttributesPropertyy",
+                columns: table => new
+                {
+                    AttributesId = table.Column<int>(type: "int", nullable: false),
+                    PropertiesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttributesPropertyy", x => new { x.AttributesId, x.PropertiesId });
+                    table.ForeignKey(
+                        name: "FK_AttributesPropertyy_Attributes_AttributesId",
+                        column: x => x.AttributesId,
+                        principalTable: "Attributes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AttributesPropertyy_Properties_PropertiesId",
+                        column: x => x.PropertiesId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Favourites",
                 columns: table => new
                 {
@@ -313,10 +498,10 @@ namespace Rentit.DAL.Migrations
                     Request_StateID_Admin = table.Column<int>(type: "int", nullable: false),
                     Checkin_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Checkout_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Nightly_price = table.Column<int>(type: "int", nullable: false),
-                    ServiceFee = table.Column<int>(type: "int", nullable: false),
-                    WebsiteFee = table.Column<int>(type: "int", nullable: false),
-                    Total_price = table.Column<int>(type: "int", nullable: false),
+                    Nightly_price = table.Column<double>(type: "float", nullable: false),
+                    ServiceFee = table.Column<double>(type: "float", nullable: false),
+                    WebsiteFee = table.Column<double>(type: "float", nullable: false),
+                    Total_price = table.Column<double>(type: "float", nullable: false),
                     StayDurationInDays = table.Column<int>(type: "int", nullable: false),
                     NumOfGuests = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -379,23 +564,27 @@ namespace Rentit.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attributes",
+                name: "AttributesRequestHost",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Icon_Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RequestHostId = table.Column<int>(type: "int", nullable: true)
+                    Attributes_requestsId = table.Column<int>(type: "int", nullable: false),
+                    RequesthostsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attributes", x => x.Id);
+                    table.PrimaryKey("PK_AttributesRequestHost", x => new { x.Attributes_requestsId, x.RequesthostsId });
                     table.ForeignKey(
-                        name: "FK_Attributes_RequestHosts_RequestHostId",
-                        column: x => x.RequestHostId,
+                        name: "FK_AttributesRequestHost_Attributes_Attributes_requestsId",
+                        column: x => x.Attributes_requestsId,
+                        principalTable: "Attributes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AttributesRequestHost_RequestHosts_RequesthostsId",
+                        column: x => x.RequesthostsId,
                         principalTable: "RequestHosts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,45 +608,26 @@ namespace Rentit.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "AttributesPropertyy",
-                columns: table => new
-                {
-                    AttributesId = table.Column<int>(type: "int", nullable: false),
-                    PropertiesId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AttributesPropertyy", x => new { x.AttributesId, x.PropertiesId });
-                    table.ForeignKey(
-                        name: "FK_AttributesPropertyy_Attributes_AttributesId",
-                        column: x => x.AttributesId,
-                        principalTable: "Attributes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AttributesPropertyy_Properties_PropertiesId",
-                        column: x => x.PropertiesId,
-                        principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Attributes",
-                columns: new[] { "Id", "Icon_Url", "Name", "RequestHostId" },
+                columns: new[] { "Id", "Icon_Url", "Name" },
                 values: new object[,]
                 {
-                    { 1, "icon1.jpg", "Attribute1", null },
-                    { 2, "icon2.jpg", "Attribute2", null },
-                    { 3, "icon3.jpg", "Attribute3", null },
-                    { 4, "icon4.jpg", "Attribute4", null },
-                    { 5, "icon5.jpg", "Attribute5", null },
-                    { 6, "icon6.jpg", "Attribute6", null },
-                    { 7, "icon7.jpg", "Attribute7", null },
-                    { 8, "icon8.jpg", "Attribute8", null },
-                    { 9, "icon9.jpg", "Attribute9", null },
-                    { 10, "icon10.jpg", "Attribute10", null }
+                    { 1, "icon1.jpg", "WiFi" },
+                    { 2, "icon2.jpg", "Washer" },
+                    { 3, "icon3.jpg", "Extra pillows and blankets" },
+                    { 4, "icon4.jpg", "Iron" },
+                    { 5, "icon5.jpg", "TV" },
+                    { 6, "icon6.jpg", "Air conditioning" },
+                    { 7, "icon7.jpg", "Heating" },
+                    { 8, "icon8.jpg", "Carbon monoxide alarm" },
+                    { 9, "icon9.jpg", "kitchen essentials" },
+                    { 10, "icon10.jpg", "Outdoor dining area" },
+                    { 11, "icon11.jpg", "Outdoor dining area" },
+                    { 12, "icon12.jpg", "BBQ grill" },
+                    { 13, "icon13.jpg", "Security cameras on property" },
+                    { 14, "icon14.jpg", "Smoke alarm" },
+                    { 15, "icon15.jpg", "Free parking on premises" }
                 });
 
             migrationBuilder.InsertData(
@@ -557,19 +727,19 @@ namespace Rentit.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "FName", "JoinedDate", "LName", "RoleId", "Start_HostingDate" },
+                columns: new[] { "Id", "Email", "FName", "Img_URL", "JoinedDate", "LName", "RoleId", "Start_HostingDate" },
                 values: new object[,]
                 {
-                    { 1, "john.doe@example.com", "John", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Doe", 1, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, "jane.smith@example.com", "Jane", new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smith", 2, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, "alice.johnson@example.com", "Alice", new DateTime(2022, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Johnson", 2, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, "bob.brown@example.com", "Bob", new DateTime(2022, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Brown", 2, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, "eva.martinez@example.com", "Eva", new DateTime(2022, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Martinez", 2, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, "michael.lee@example.com", "Michael", new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lee", 2, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, "sarah.garcia@example.com", "Sarah", new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Garcia", 2, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 8, "david.rodriguez@example.com", "David", new DateTime(2023, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rodriguez", 2, new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, "emma.wilson@example.com", "Emma", new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wilson", 2, new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, "james.taylor@example.com", "James", new DateTime(2023, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Taylor", 2, new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, "john.doe@example.com", "John", "user1.jpg", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Doe", 1, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, "jane.smith@example.com", "Jane", "user2.jpg", new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smith", 2, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, "alice.johnson@example.com", "Alice", "user3.jpg", new DateTime(2022, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Johnson", 2, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, "bob.brown@example.com", "Bob", "user4.jpg", new DateTime(2022, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Brown", 2, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, "eva.martinez@example.com", "Eva", "user5.jpg", new DateTime(2022, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Martinez", 2, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, "michael.lee@example.com", "Michael", "user6.jpg", new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lee", 2, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, "sarah.garcia@example.com", "Sarah", "user7.jpg", new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Garcia", 2, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, "david.rodriguez@example.com", "David", "user8.jpg", new DateTime(2023, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rodriguez", 2, new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, "emma.wilson@example.com", "Emma", "user9.jpg", new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wilson", 2, new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, "james.taylor@example.com", "James", "user10.jpg", new DateTime(2023, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Taylor", 2, new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -613,14 +783,53 @@ namespace Rentit.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attributes_RequestHostId",
-                table: "Attributes",
-                column: "RequestHostId");
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AttributesPropertyy_PropertiesId",
                 table: "AttributesPropertyy",
                 column: "PropertiesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AttributesRequestHost_RequesthostsId",
+                table: "AttributesRequestHost",
+                column: "RequesthostsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favourites_PropertyID",
@@ -742,7 +951,25 @@ namespace Rentit.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "AttributesPropertyy");
+
+            migrationBuilder.DropTable(
+                name: "AttributesRequestHost");
 
             migrationBuilder.DropTable(
                 name: "Favourites");
@@ -760,28 +987,34 @@ namespace Rentit.DAL.Migrations
                 name: "UserReviews");
 
             migrationBuilder.DropTable(
-                name: "Attributes");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Properties");
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Attributes");
 
             migrationBuilder.DropTable(
                 name: "RequestHosts");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Properties");
 
             migrationBuilder.DropTable(
-                name: "PropertyStates");
+                name: "RequestStates");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "PlaceTypes");
 
             migrationBuilder.DropTable(
-                name: "PropertyTypes");
+                name: "PropertyStates");
 
             migrationBuilder.DropTable(
-                name: "RequestStates");
+                name: "PropertyTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");

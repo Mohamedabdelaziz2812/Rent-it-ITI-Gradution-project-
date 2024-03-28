@@ -55,7 +55,7 @@ namespace Rentit.DAL
                 .Include(u=> u.Properties)  
                   .ThenInclude(u=>u.Property_imgs)
                 .Include(u=>u.Properties)   
-                  .ThenInclude(u=>u.Attributes)
+                  .ThenInclude(u=>u.Attributes_property)
                 .FirstOrDefault(u => u.Id == id); 
         }
 

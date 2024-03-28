@@ -35,8 +35,6 @@ namespace Rentit.BL
                 Location_url = propertyAdd.Location_url,
                 GovernateId = propertyAdd.GovernateId
             };
-          
-            
             propertyRepo.AddLocation(loc);
             propertyRepo.SaveChanges();
             Propertyy property = new()
@@ -52,8 +50,12 @@ namespace Rentit.BL
                 PropetyTypeId = propertyAdd.PropetyTypeId,
                 StateId = 1,
                 HostId = propertyAdd.UserID,
-                Loc_id = loc.Id
+                Loc_id = loc.Id,
             };
+            foreach (var item in propertyAdd.Attributes_requests)
+            {
+                property.Attributes_property.Add(item); 
+            }
             propertyRepo.Add(property);
             propertyRepo.SaveChanges();
             foreach (var item in propertyAdd.Imgs)
@@ -113,7 +115,7 @@ namespace Rentit.BL
                     Img_order = i.Img_order,
                     Img_URL = i.Img_URL
                 }).ToList(),
-                attributes = p.Attributes.Select(a => new AttributesChildDto
+                attributes = p.Attributes_property.Select(a => new AttributesChildDto
                 { Id = a.Id, Name = a.Name, Icon_Url = a.Icon_Url }).ToList()
             });
         }
@@ -187,7 +189,7 @@ namespace Rentit.BL
                     Img_URL = i.Img_URL
                 }).ToList(),
 
-                attributes = property.Attributes.Select(a => new AttributesChildDto
+                attributes = property.Attributes_property.Select(a => new AttributesChildDto
                 { Id = a.Id, Name = a.Name, Icon_Url = a.Icon_Url }).ToList(),
 
                 UserReviews = property.UserReviews.Select(r => new ReviewReadDto

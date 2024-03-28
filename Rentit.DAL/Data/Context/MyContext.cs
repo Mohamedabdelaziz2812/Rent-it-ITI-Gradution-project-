@@ -506,16 +506,21 @@ namespace Rentit.DAL
             #region Attributes 
             var attributes = new List<Attributes>
             {
-                new Attributes { Id = 1, Name = "Attribute1", Icon_Url = "icon1.jpg" },
-            new Attributes { Id = 2, Name = "Attribute2", Icon_Url = "icon2.jpg" },
-            new Attributes { Id = 3, Name = "Attribute3", Icon_Url = "icon3.jpg" },
-            new Attributes { Id = 4, Name = "Attribute4", Icon_Url = "icon4.jpg" },
-            new Attributes { Id = 5, Name = "Attribute5", Icon_Url = "icon5.jpg" },
-            new Attributes { Id = 6, Name = "Attribute6", Icon_Url = "icon6.jpg" },
-            new Attributes { Id = 7, Name = "Attribute7", Icon_Url = "icon7.jpg" },
-            new Attributes { Id = 8, Name = "Attribute8", Icon_Url = "icon8.jpg" },
-            new Attributes { Id = 9, Name = "Attribute9", Icon_Url = "icon9.jpg" },
-            new Attributes { Id = 10, Name = "Attribute10", Icon_Url = "icon10.jpg" },
+            new Attributes { Id = 1, Name = "WiFi", Icon_Url = "icon1.jpg" },
+            new Attributes { Id = 2, Name = "Washer", Icon_Url = "icon2.jpg" },
+            new Attributes { Id = 3, Name = "Extra pillows and blankets", Icon_Url = "icon3.jpg" },
+            new Attributes { Id = 4, Name = "Iron", Icon_Url = "icon4.jpg" },
+            new Attributes { Id = 5, Name = "TV", Icon_Url = "icon5.jpg" },
+            new Attributes { Id = 6, Name = "Air conditioning", Icon_Url = "icon6.jpg" },
+            new Attributes { Id = 7, Name = "Heating", Icon_Url = "icon7.jpg" },
+            new Attributes { Id = 8, Name = "Carbon monoxide alarm", Icon_Url = "icon8.jpg" },
+            new Attributes { Id = 9, Name = "kitchen essentials", Icon_Url = "icon9.jpg" },
+            new Attributes { Id = 10,Name = "Outdoor dining area", Icon_Url = "icon10.jpg" },
+            new Attributes { Id = 11,Name="Outdoor dining area", Icon_Url="icon11.jpg"},
+            new Attributes { Id = 12,Name="BBQ grill" , Icon_Url="icon12.jpg"},
+            new Attributes { Id = 13,Name="Security cameras on property",Icon_Url="icon13.jpg"},
+            new Attributes { Id = 14,Name="Smoke alarm",Icon_Url="icon14.jpg"},
+            new Attributes { Id = 15,Name="Free parking on premises",Icon_Url="icon15.jpg" }
             };
             #endregion
             #region Request State

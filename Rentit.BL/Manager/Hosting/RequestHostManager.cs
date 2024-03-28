@@ -11,10 +11,12 @@ namespace Rentit.BL
     public class RequestHostManager : IRequestHostManger
     {
         private readonly IRequestHostRepo requestHostRepo;
+        private readonly IAttributeRepo Attributerepo;
 
-        public RequestHostManager(IRequestHostRepo _requestHostRepo)
+        public RequestHostManager(IRequestHostRepo _requestHostRepo , IAttributeRepo _AttributeRepo)
         {
-            this.requestHostRepo = _requestHostRepo;    
+            this.requestHostRepo = _requestHostRepo; 
+            this.Attributerepo = _AttributeRepo;    
         }
         public bool AcceptHostRequestByAdmin(int requestID)
         {
@@ -61,6 +63,12 @@ namespace Rentit.BL
                 Location_url = propertyAdd.Location_url,
                 GovernateId = propertyAdd.GovernateId,
             };
+            foreach (var item in propertyAdd.attrubutesToAddDto)
+            {
+                Attributes? attribute = Attributerepo.GetbyId(item.id);
+
+                addrequestHost.Attributes_requests.Add(attribute);
+            }
             requestHostRepo.Add(addrequestHost);
             requestHostRepo.SaveChanges();
             foreach (var item in propertyAdd.imageToAddRequestHostDtos)
@@ -74,6 +82,7 @@ namespace Rentit.BL
                 requestHostRepo.AddImagesToRequest(imgrequest);
                 requestHostRepo.SaveChanges();
             }
+           
             return true;
         }
 
