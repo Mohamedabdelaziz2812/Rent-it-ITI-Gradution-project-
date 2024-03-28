@@ -36,7 +36,7 @@ namespace Rentit.DAL
                 .Include(p=>p.User)
                 .Include(p=>p.Property_States)
                 .Include(p => p.Property_imgs)
-                .Include(p => p.Attributes)
+                .Include(p => p.Attributes_property)
                 .Include(p=>p.RequestRents)
                 .Include(p=>p.Location)
                 .ThenInclude(x=>x.Governate)
@@ -59,7 +59,7 @@ namespace Rentit.DAL
            return context.Properties
                 .Include(p=>p.Property_imgs)
                 .Include(p=>p.Place_Type)
-                .Include(p=>p.Attributes)
+                .Include(p=>p.Attributes_property)
                 .Include(p=>p.Property_Type)
                 .Include(p=>p.User)
                 .Include(p=>p.Property_States)

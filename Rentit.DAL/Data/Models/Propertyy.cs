@@ -31,7 +31,7 @@ namespace Rentit.DAL
         public int HostId { get; set; }
         public Client User { get; set; } = null!;
         public ICollection<Image> Property_imgs { get; set; } = new HashSet<Image>();
-        public ICollection<Attributes> Attributes { get; set; } = new HashSet<Attributes>();
+        public ICollection<Attributes> Attributes_property { get; set; } = new HashSet<Attributes>();
         public ICollection<RequestRent> RequestRents { get; set; } = new HashSet<RequestRent>();
         public ICollection<UserReview> UserReviews { get; set; } = new HashSet<UserReview>();
     }

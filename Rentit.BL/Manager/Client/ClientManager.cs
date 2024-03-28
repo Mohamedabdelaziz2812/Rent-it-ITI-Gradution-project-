@@ -26,7 +26,7 @@ namespace Rentit.BL
         }
 
        public bool UpdateUser(UserUpdateDto UserFromRequest)
-        {
+       {
             Client? User = UserRepo.GetUserDetails(UserFromRequest.Id);
             if (User  == null) { return false; }
             User.FName = UserFromRequest.FName;
@@ -37,10 +37,10 @@ namespace Rentit.BL
             UserRepo.UpdateUser(User);
             UserRepo.SaveChanges();
             return true;
-        }
+       }
 
-            public UserDto GetUserDetails(int id)
-        {
+       public UserDto GetUserDetails(int id)
+       {
             Client user = UserRepo.GetUserDetails(id);
 
             return new UserDto
@@ -134,7 +134,7 @@ namespace Rentit.BL
                         Img_URL = u.Img_URL
                     }).ToList(),
 
-                    attributes = i.Attributes.Select(a => new AttributesChildDto
+                    attributes = i.Attributes_property.Select(a => new AttributesChildDto
                     {
                         Id = a.Id,
                         Name = a.Name,
@@ -142,7 +142,7 @@ namespace Rentit.BL
                     }).ToList(),
                 }).ToList()
             };
-        }
+       }
 
         public int SaveChanges()
         {

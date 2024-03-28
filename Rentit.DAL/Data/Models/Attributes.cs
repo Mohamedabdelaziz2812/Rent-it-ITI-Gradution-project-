@@ -8,6 +8,6 @@ namespace Rentit.DAL
         public string Name { get; set; } = string.Empty;
         public string Icon_Url { get; set; } = string.Empty;
         public ICollection<Propertyy>? Properties { get; set; }
-        //public ICollection<RequestHost> RequestHost { get; set; }
+        public ICollection<RequestHost>? Requesthosts { get; set; }
     }
 }

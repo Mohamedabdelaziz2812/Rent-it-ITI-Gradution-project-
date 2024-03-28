@@ -12,8 +12,8 @@ using Rentit.DAL;
 namespace Rentit.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240319103454_m1")]
-    partial class m1
+    [Migration("20240328145138_UpdatedDataBase")]
+    partial class UpdatedDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,222 @@ namespace Rentit.DAL.Migrations
                     b.ToTable("AttributesPropertyy");
                 });
 
+            modelBuilder.Entity("AttributesRequestHost", b =>
+                {
+                    b.Property<int>("Attributes_requestsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequesthostsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Attributes_requestsId", "RequesthostsId");
+
+                    b.HasIndex("RequesthostsId");
+
+                    b.ToTable("AttributesRequestHost");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Account", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClientiD")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("Rentit.DAL.Attributes", b =>
                 {
                     b.Property<int>("Id")
@@ -56,12 +272,7 @@ namespace Rentit.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RequestHostId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RequestHostId");
 
                     b.ToTable("Attributes");
 
@@ -70,61 +281,243 @@ namespace Rentit.DAL.Migrations
                         {
                             Id = 1,
                             Icon_Url = "icon1.jpg",
-                            Name = "Attribute1"
+                            Name = "WiFi"
                         },
                         new
                         {
                             Id = 2,
                             Icon_Url = "icon2.jpg",
-                            Name = "Attribute2"
+                            Name = "Washer"
                         },
                         new
                         {
                             Id = 3,
                             Icon_Url = "icon3.jpg",
-                            Name = "Attribute3"
+                            Name = "Extra pillows and blankets"
                         },
                         new
                         {
                             Id = 4,
                             Icon_Url = "icon4.jpg",
-                            Name = "Attribute4"
+                            Name = "Iron"
                         },
                         new
                         {
                             Id = 5,
                             Icon_Url = "icon5.jpg",
-                            Name = "Attribute5"
+                            Name = "TV"
                         },
                         new
                         {
                             Id = 6,
                             Icon_Url = "icon6.jpg",
-                            Name = "Attribute6"
+                            Name = "Air conditioning"
                         },
                         new
                         {
                             Id = 7,
                             Icon_Url = "icon7.jpg",
-                            Name = "Attribute7"
+                            Name = "Heating"
                         },
                         new
                         {
                             Id = 8,
                             Icon_Url = "icon8.jpg",
-                            Name = "Attribute8"
+                            Name = "Carbon monoxide alarm"
                         },
                         new
                         {
                             Id = 9,
                             Icon_Url = "icon9.jpg",
-                            Name = "Attribute9"
+                            Name = "kitchen essentials"
                         },
                         new
                         {
                             Id = 10,
                             Icon_Url = "icon10.jpg",
-                            Name = "Attribute10"
+                            Name = "Outdoor dining area"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Icon_Url = "icon11.jpg",
+                            Name = "Outdoor dining area"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Icon_Url = "icon12.jpg",
+                            Name = "BBQ grill"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Icon_Url = "icon13.jpg",
+                            Name = "Security cameras on property"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Icon_Url = "icon14.jpg",
+                            Name = "Smoke alarm"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Icon_Url = "icon15.jpg",
+                            Name = "Free parking on premises"
+                        });
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Start_HostingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "john.doe@example.com",
+                            FName = "John",
+                            Img_URL = "user1.jpg",
+                            JoinedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Doe",
+                            RoleId = 1,
+                            Start_HostingDate = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "jane.smith@example.com",
+                            FName = "Jane",
+                            Img_URL = "user2.jpg",
+                            JoinedDate = new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Smith",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "alice.johnson@example.com",
+                            FName = "Alice",
+                            Img_URL = "user3.jpg",
+                            JoinedDate = new DateTime(2022, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Johnson",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "bob.brown@example.com",
+                            FName = "Bob",
+                            Img_URL = "user4.jpg",
+                            JoinedDate = new DateTime(2022, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Brown",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "eva.martinez@example.com",
+                            FName = "Eva",
+                            Img_URL = "user5.jpg",
+                            JoinedDate = new DateTime(2022, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Martinez",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "michael.lee@example.com",
+                            FName = "Michael",
+                            Img_URL = "user6.jpg",
+                            JoinedDate = new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Lee",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Email = "sarah.garcia@example.com",
+                            FName = "Sarah",
+                            Img_URL = "user7.jpg",
+                            JoinedDate = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Garcia",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Email = "david.rodriguez@example.com",
+                            FName = "David",
+                            Img_URL = "user8.jpg",
+                            JoinedDate = new DateTime(2023, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Rodriguez",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Email = "emma.wilson@example.com",
+                            FName = "Emma",
+                            Img_URL = "user9.jpg",
+                            JoinedDate = new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Wilson",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Email = "james.taylor@example.com",
+                            FName = "James",
+                            Img_URL = "user10.jpg",
+                            JoinedDate = new DateTime(2023, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LName = "Taylor",
+                            RoleId = 2,
+                            Start_HostingDate = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1044,8 +1437,8 @@ namespace Rentit.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Nightly_price")
-                        .HasColumnType("int");
+                    b.Property<double>("Nightly_price")
+                        .HasColumnType("float");
 
                     b.Property<int>("NumOfGuests")
                         .HasColumnType("int");
@@ -1059,20 +1452,20 @@ namespace Rentit.DAL.Migrations
                     b.Property<int>("Request_StateID_Host")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceFee")
-                        .HasColumnType("int");
+                    b.Property<double>("ServiceFee")
+                        .HasColumnType("float");
 
                     b.Property<int>("StayDurationInDays")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_price")
-                        .HasColumnType("int");
+                    b.Property<double>("Total_price")
+                        .HasColumnType("float");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int>("WebsiteFee")
-                        .HasColumnType("int");
+                    b.Property<double>("WebsiteFee")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -1120,144 +1513,6 @@ namespace Rentit.DAL.Migrations
                         {
                             Id = 3,
                             Status = "Refused"
-                        });
-                });
-
-            modelBuilder.Entity("Rentit.DAL.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("JoinedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Start_HostingDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "john.doe@example.com",
-                            FName = "John",
-                            JoinedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Doe",
-                            RoleId = 1,
-                            Start_HostingDate = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "jane.smith@example.com",
-                            FName = "Jane",
-                            JoinedDate = new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Smith",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "alice.johnson@example.com",
-                            FName = "Alice",
-                            JoinedDate = new DateTime(2022, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Johnson",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "bob.brown@example.com",
-                            FName = "Bob",
-                            JoinedDate = new DateTime(2022, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Brown",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Email = "eva.martinez@example.com",
-                            FName = "Eva",
-                            JoinedDate = new DateTime(2022, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Martinez",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "michael.lee@example.com",
-                            FName = "Michael",
-                            JoinedDate = new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Lee",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "sarah.garcia@example.com",
-                            FName = "Sarah",
-                            JoinedDate = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Garcia",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "david.rodriguez@example.com",
-                            FName = "David",
-                            JoinedDate = new DateTime(2023, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Rodriguez",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Email = "emma.wilson@example.com",
-                            FName = "Emma",
-                            JoinedDate = new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Wilson",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Email = "james.taylor@example.com",
-                            FName = "James",
-                            JoinedDate = new DateTime(2023, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LName = "Taylor",
-                            RoleId = 2,
-                            Start_HostingDate = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1335,11 +1590,81 @@ namespace Rentit.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rentit.DAL.Attributes", b =>
+            modelBuilder.Entity("AttributesRequestHost", b =>
                 {
+                    b.HasOne("Rentit.DAL.Attributes", null)
+                        .WithMany()
+                        .HasForeignKey("Attributes_requestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Rentit.DAL.RequestHost", null)
-                        .WithMany("Attributes")
-                        .HasForeignKey("RequestHostId");
+                        .WithMany()
+                        .HasForeignKey("RequesthostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Rentit.DAL.Account", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Rentit.DAL.Account", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rentit.DAL.Account", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Rentit.DAL.Account", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Client", b =>
+                {
+                    b.HasOne("Rentit.DAL.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Rentit.DAL.Favourite", b =>
@@ -1348,7 +1673,7 @@ namespace Rentit.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("PropertyID");
 
-                    b.HasOne("Rentit.DAL.User", "User")
+                    b.HasOne("Rentit.DAL.Client", "User")
                         .WithMany("Favorites")
                         .HasForeignKey("UserID");
 
@@ -1390,7 +1715,7 @@ namespace Rentit.DAL.Migrations
 
             modelBuilder.Entity("Rentit.DAL.Propertyy", b =>
                 {
-                    b.HasOne("Rentit.DAL.User", "User")
+                    b.HasOne("Rentit.DAL.Client", "User")
                         .WithMany("Properties")
                         .HasForeignKey("HostId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1457,7 +1782,7 @@ namespace Rentit.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Rentit.DAL.User", "User")
+                    b.HasOne("Rentit.DAL.Client", "User")
                         .WithMany("RequestHosts")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1476,7 +1801,7 @@ namespace Rentit.DAL.Migrations
 
             modelBuilder.Entity("Rentit.DAL.RequestRent", b =>
                 {
-                    b.HasOne("Rentit.DAL.User", "Host")
+                    b.HasOne("Rentit.DAL.Client", "Host")
                         .WithMany()
                         .HasForeignKey("HostID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1500,7 +1825,7 @@ namespace Rentit.DAL.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Rentit.DAL.User", "User")
+                    b.HasOne("Rentit.DAL.Client", "User")
                         .WithMany("RequestRents")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1517,30 +1842,30 @@ namespace Rentit.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Rentit.DAL.User", b =>
-                {
-                    b.HasOne("Rentit.DAL.UserRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("Rentit.DAL.UserReview", b =>
                 {
                     b.HasOne("Rentit.DAL.Propertyy", "Property")
                         .WithMany("UserReviews")
                         .HasForeignKey("PropertyID");
 
-                    b.HasOne("Rentit.DAL.User", "User")
+                    b.HasOne("Rentit.DAL.Client", "User")
                         .WithMany()
                         .HasForeignKey("Userid");
 
                     b.Navigation("Property");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Rentit.DAL.Client", b =>
+                {
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Properties");
+
+                    b.Navigation("RequestHosts");
+
+                    b.Navigation("RequestRents");
                 });
 
             modelBuilder.Entity("Rentit.DAL.Governate", b =>
@@ -1559,20 +1884,7 @@ namespace Rentit.DAL.Migrations
 
             modelBuilder.Entity("Rentit.DAL.RequestHost", b =>
                 {
-                    b.Navigation("Attributes");
-
                     b.Navigation("Imgs");
-                });
-
-            modelBuilder.Entity("Rentit.DAL.User", b =>
-                {
-                    b.Navigation("Favorites");
-
-                    b.Navigation("Properties");
-
-                    b.Navigation("RequestHosts");
-
-                    b.Navigation("RequestRents");
                 });
 #pragma warning restore 612, 618
         }

@@ -37,6 +37,21 @@ namespace Rentit.DAL.Migrations
                     b.ToTable("AttributesPropertyy");
                 });
 
+            modelBuilder.Entity("AttributesRequestHost", b =>
+                {
+                    b.Property<int>("Attributes_requestsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequesthostsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Attributes_requestsId", "RequesthostsId");
+
+                    b.HasIndex("RequesthostsId");
+
+                    b.ToTable("AttributesRequestHost");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -254,12 +269,7 @@ namespace Rentit.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RequestHostId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RequestHostId");
 
                     b.ToTable("Attributes");
 
@@ -268,61 +278,91 @@ namespace Rentit.DAL.Migrations
                         {
                             Id = 1,
                             Icon_Url = "icon1.jpg",
-                            Name = "Attribute1"
+                            Name = "WiFi"
                         },
                         new
                         {
                             Id = 2,
                             Icon_Url = "icon2.jpg",
-                            Name = "Attribute2"
+                            Name = "Washer"
                         },
                         new
                         {
                             Id = 3,
                             Icon_Url = "icon3.jpg",
-                            Name = "Attribute3"
+                            Name = "Extra pillows and blankets"
                         },
                         new
                         {
                             Id = 4,
                             Icon_Url = "icon4.jpg",
-                            Name = "Attribute4"
+                            Name = "Iron"
                         },
                         new
                         {
                             Id = 5,
                             Icon_Url = "icon5.jpg",
-                            Name = "Attribute5"
+                            Name = "TV"
                         },
                         new
                         {
                             Id = 6,
                             Icon_Url = "icon6.jpg",
-                            Name = "Attribute6"
+                            Name = "Air conditioning"
                         },
                         new
                         {
                             Id = 7,
                             Icon_Url = "icon7.jpg",
-                            Name = "Attribute7"
+                            Name = "Heating"
                         },
                         new
                         {
                             Id = 8,
                             Icon_Url = "icon8.jpg",
-                            Name = "Attribute8"
+                            Name = "Carbon monoxide alarm"
                         },
                         new
                         {
                             Id = 9,
                             Icon_Url = "icon9.jpg",
-                            Name = "Attribute9"
+                            Name = "kitchen essentials"
                         },
                         new
                         {
                             Id = 10,
                             Icon_Url = "icon10.jpg",
-                            Name = "Attribute10"
+                            Name = "Outdoor dining area"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Icon_Url = "icon11.jpg",
+                            Name = "Outdoor dining area"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Icon_Url = "icon12.jpg",
+                            Name = "BBQ grill"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Icon_Url = "icon13.jpg",
+                            Name = "Security cameras on property"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Icon_Url = "icon14.jpg",
+                            Name = "Smoke alarm"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Icon_Url = "icon15.jpg",
+                            Name = "Free parking on premises"
                         });
                 });
 
@@ -1547,6 +1587,21 @@ namespace Rentit.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AttributesRequestHost", b =>
+                {
+                    b.HasOne("Rentit.DAL.Attributes", null)
+                        .WithMany()
+                        .HasForeignKey("Attributes_requestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rentit.DAL.RequestHost", null)
+                        .WithMany()
+                        .HasForeignKey("RequesthostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1596,13 +1651,6 @@ namespace Rentit.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Rentit.DAL.Attributes", b =>
-                {
-                    b.HasOne("Rentit.DAL.RequestHost", null)
-                        .WithMany("Attributes")
-                        .HasForeignKey("RequestHostId");
                 });
 
             modelBuilder.Entity("Rentit.DAL.Client", b =>
@@ -1833,8 +1881,6 @@ namespace Rentit.DAL.Migrations
 
             modelBuilder.Entity("Rentit.DAL.RequestHost", b =>
                 {
-                    b.Navigation("Attributes");
-
                     b.Navigation("Imgs");
                 });
 #pragma warning restore 612, 618
