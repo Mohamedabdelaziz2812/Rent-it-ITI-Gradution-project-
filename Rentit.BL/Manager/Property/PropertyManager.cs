@@ -2,6 +2,7 @@
 using Rentit.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,8 @@ namespace Rentit.BL
                 Location_url = propertyAdd.Location_url,
                 GovernateId = propertyAdd.GovernateId
             };
+          
+            
             propertyRepo.AddLocation(loc);
             propertyRepo.SaveChanges();
             Propertyy property = new()
@@ -53,6 +56,17 @@ namespace Rentit.BL
             };
             propertyRepo.Add(property);
             propertyRepo.SaveChanges();
+            foreach (var item in propertyAdd.Imgs)
+            {
+                Image Images = new Image()
+                {
+                    Img_URL = item.Img_URL,
+                    Img_order = item.Img_order,
+                    PropertyId = property.Id
+                };
+                property.Property_imgs.Add(Images); 
+                propertyRepo.SaveChanges(); 
+            }
             return true;
         }
         public bool Delete(int id)

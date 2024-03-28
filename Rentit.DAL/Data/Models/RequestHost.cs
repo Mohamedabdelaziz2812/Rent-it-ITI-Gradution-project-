@@ -37,6 +37,6 @@ namespace Rentit.DAL
         public string Message {  get; set; } = string.Empty;    
         public PropertyType Property_Type { get; set; } = null!;
         public ICollection<ImgesForRequest> Imgs { get; set; } = new HashSet<ImgesForRequest>();
-        public ICollection<Attributes> Attributes { get; set; } = new HashSet<Attributes>();
+        public ICollection<Attributes> Attributes_requests { get; set; } = new HashSet<Attributes>();
     }
 }

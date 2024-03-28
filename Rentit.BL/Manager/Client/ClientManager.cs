@@ -148,5 +148,13 @@ namespace Rentit.BL
         {
             return UserRepo.SaveChanges();
         }
+        public bool EditCLientImg(string url, Client client)
+        {
+            if (client == null) { return false; }
+            client.Img_URL = url;
+            UserRepo.UpdateUser(client);
+            UserRepo.SaveChanges();
+            return true;
+        }
     }
 }
