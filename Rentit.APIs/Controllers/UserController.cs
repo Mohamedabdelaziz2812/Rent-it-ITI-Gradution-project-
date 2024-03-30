@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Rentit.BL;
 using Rentit.BL.Dtos;
 using Rentit.DAL;
+using System.IO;
 using System.Security.Claims;
 
 namespace Rentit.APIs.Controllers
@@ -56,7 +57,27 @@ namespace Rentit.APIs.Controllers
         public async Task<ActionResult> AddRequestHost(UploadRequestHostDto requestHost)
         {
 
-            PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);
+            //PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);
+            PropertyAddDto? PropToAdd = new PropertyAddDto()
+            {
+                Property_Name = requestHost.Property_Name,
+                Nighly_Price=requestHost.Nighly_Price,
+                Description=requestHost.Description,    
+                Nums_Guests=requestHost.Nums_Guests,    
+                Nums_Beds=requestHost.Nums_Beds,    
+                Nums_Bathrooms = requestHost.Nums_Bathrooms,
+                Nums_Bedrooms = requestHost.Nums_Bedrooms,
+                Street = requestHost.Street,
+                City = requestHost.City,
+                Building_no = requestHost.Building_no,
+                Building_name = requestHost.Building_name,
+                District_name = requestHost.District_name,
+                Location_url = requestHost.Location_url,
+                GovernateId = requestHost.GovernateId,
+                PlaceType_ID = requestHost.PlaceType_ID,
+                PropetyTypeId = requestHost.PropetyTypeId,
+                attrubutesToAddDto = requestHost.attrubutesToAddDto
+            };
             var AllowedExtensions = new string[] { ".png", ".jpg", ".svg" };
             var MaxFileSize = 4_000_000; // 4 MB
 
