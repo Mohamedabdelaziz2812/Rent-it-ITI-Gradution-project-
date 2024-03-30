@@ -23,7 +23,13 @@ namespace Rentit.APIs
 
             string? connectionString = builder.Configuration.GetConnectionString("con1");
 
-           
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name:"OurApplicationCorsPolicy", policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             builder.Services.AddScoped<IPropertyRepo,PropertyRepo>();
 
@@ -50,7 +56,7 @@ namespace Rentit.APIs
                 policy.RequireClaim(ClaimTypes.Role, "Admin"));
 
                 options.AddPolicy("UserRole", policy =>
-               policy.RequireClaim(ClaimTypes.Role, "User"));
+                policy.RequireClaim(ClaimTypes.Role, "User"));
 
             });
 
@@ -103,6 +109,8 @@ namespace Rentit.APIs
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors();
 
 
             app.UseAuthentication();
