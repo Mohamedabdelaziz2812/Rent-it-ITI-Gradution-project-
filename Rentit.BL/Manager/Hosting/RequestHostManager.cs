@@ -65,7 +65,7 @@ namespace Rentit.BL
             };
             foreach (var item in propertyAdd.attrubutesToAddDto)
             {
-                Attributes? attribute = Attributerepo.GetbyId(item.id);
+                Attributes? attribute = Attributerepo.GetbyId(item);
 
                 addrequestHost.Attributes_requests.Add(attribute);
             }
