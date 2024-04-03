@@ -86,7 +86,7 @@ namespace Rentit.BL
         {
             DateTime TodayTime = DateTime.Now;  
             IEnumerable<Propertyy> PropertiesFromDb = propertyRepo.GetAll();
-            foreach(Propertyy property in PropertiesFromDb)
+            foreach(Propertyy property in PropertiesFromDb)     
             {
                 foreach(RequestRent request in property.RequestRents)
                 {
