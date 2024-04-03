@@ -487,9 +487,9 @@ namespace Rentit.DAL
             {
                 new Image { Id = 1, Img_URL = "image1.jpg", Img_order = 1, PropertyId = 1 },
                 new Image { Id = 2, Img_URL = "image2.jpg", Img_order = 2, PropertyId = 1 },
-                new Image { Id = 3, Img_URL = "image3.jpg", Img_order = 3, PropertyId = 2 },
-                new Image { Id = 4, Img_URL = "image4.jpg", Img_order = 4, PropertyId = 2 },
-                new Image { Id = 5, Img_URL = "image5.jpg", Img_order = 1, PropertyId = 3 },
+                new Image { Id = 3, Img_URL = "D:\\iti\\rentit-project\\Rentit.APIs\\Assets\\PropertiesImages\\tataalexlolo2.jpg", Img_order = 3, PropertyId = 2 },
+                new Image { Id = 4, Img_URL = "https://img.freepik.com/free-vector/hand-sketch-art-decor-inspired-large-floral-arrangement_1409-4511.jpg?w=740&t=st=1711924304~exp=1711924904~hmac=198bbde6e9b3da518d3fe0904717c37d2bb559fb797e03b42663c1e061e9722f", Img_order = 4, PropertyId = 2 },
+                new Image { Id = 5, Img_URL = "tataalexlolo1.jpg", Img_order = 1, PropertyId = 3 },
                 new Image { Id = 6, Img_URL = "image6.jpg", Img_order = 2, PropertyId = 3 },
                 new Image { Id = 7, Img_URL = "image7.jpg", Img_order = 1, PropertyId = 4 },
                 new Image { Id = 8, Img_URL = "image8.jpg", Img_order = 2, PropertyId = 4 },
