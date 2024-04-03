@@ -23,8 +23,8 @@ namespace Rentit.BL.Dtos
         public string DistrictName {  get; set; } = string.Empty;   
         public string governate { get; set; } = string.Empty;       
         public string Property_Type { get; set; } = null!;
-        public string State { get; set; } = string.Empty;  
-        public List<ImageChildDto> image { get; set; } =  new();
+        public string State { get; set; } = string.Empty;
+        public string image { get; set; } = string.Empty;
         public List<AttributesChildDto> attributes { get; set; } = new();
     }
 }
