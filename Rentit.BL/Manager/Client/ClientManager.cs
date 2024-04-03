@@ -46,9 +46,11 @@ namespace Rentit.BL
             return new UserDto
             {
                 Id = id,
+                Fname = user.FName,
+                Lname = user.LName,
                 Name = $"{user.FName} {user.LName}",
                 Email = user.Email,
-                Image_URL=user.Img_URL,
+                Image_URL = user.Img_URL,
                 JoinedDate = user.JoinedDate,
                 Start_HostingDate = user.Start_HostingDate,
                 RoleId = user.RoleId,
@@ -111,16 +113,17 @@ namespace Rentit.BL
                     Nums_Beds = i.Nums_Beds,
                     Nums_Guests = i.Nums_Guests,
                     Nums_Web_visitors = i.Nums_Web_visitors,
+                    Host_image = i.User.Img_URL,
                     location = new LocationReadDto
                     {
-                            Id = i.Loc_id,
-                            Street = i.Location.Street,
-                            City = i.Location.City,
-                            Building_no = i.Location.Building_no,
-                            Building_name = i.Location.Building_name,
-                            District_name = i.Location.District_name,
-                            Location_url = i.Location.Location_url,
-                            governate = i.Location.Governate.Name
+                        Id = i.Loc_id,
+                        Street = i.Location.Street,
+                        City = i.Location.City,
+                        Building_no = i.Location.Building_no,
+                        Building_name = i.Location.Building_name,
+                        District_name = i.Location.District_name,
+                        Location_url = i.Location.Location_url,
+                        governate = i.Location.Governate.Name
                     },
                     placeType = i.Place_Type.Name,
                     Property_Type = i.Property_Type.Name,
@@ -140,7 +143,7 @@ namespace Rentit.BL
                         Name = a.Name,
                         Icon_Url = a.Icon_Url
                     }).ToList(),
-                }).ToList()
+                }) .ToList()
             };
        }
 

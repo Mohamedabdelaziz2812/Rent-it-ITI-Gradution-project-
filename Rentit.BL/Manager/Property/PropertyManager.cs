@@ -97,30 +97,26 @@ namespace Rentit.BL
 
                 }
             }
+
             return PropertiesFromDb.Select(p => new ListPropertyReadDto
             {
                 Id = p.Id,
                 Property_Name = p.Property_Name,
-                Nighly_Price = p.Nighly_Price,  
-                Description = p.Description,    
-                Nums_Guests = p.Nums_Guests,    
-                Nums_Bathrooms = p.Nums_Bathrooms,  
-                Nums_Beds = p.Nums_Bedrooms,        
-                Nums_Bedrooms=p.Nums_Bedrooms,
+                Nighly_Price = p.Nighly_Price,
+                Description = p.Description,
+                Nums_Guests = p.Nums_Guests,
+                Nums_Bathrooms = p.Nums_Bathrooms,
+                Nums_Beds = p.Nums_Bedrooms,
+                Nums_Bedrooms = p.Nums_Bedrooms,
                 Nums_Web_visitors = p.Nums_Web_visitors,
                 DistrictName = p.Location.District_name,
                 governate = p.Location.Governate.Name,
-                Property_Type=p.Property_Type.Name,
-                State=p.Property_States.Name,
-                image = p.Property_imgs.Select(i => new ImageChildDto
-                {
-                    Id = i.Id,
-                    Img_order = i.Img_order,
-                    Img_URL = i.Img_URL
-                }).ToList(),
+                Property_Type = p.Property_Type.Name,
+                State = p.Property_States.Name,
+                image = p.Property_imgs.OrderBy(i=>i.Img_order).Select(i=>i.Img_URL).FirstOrDefault(),
                 attributes = p.Attributes_property.Select(a => new AttributesChildDto
                 { Id = a.Id, Name = a.Name, Icon_Url = a.Icon_Url }).ToList()
-            });
+            }) ;
         }
         public ListPropertyReadDto? GetById(int id)
         {

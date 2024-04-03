@@ -32,12 +32,12 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy ="UserRole")]
-        [Route("UserInfo")]
-        public ActionResult<UserDto> GetUserDetails() 
+        //[Authorize(Policy ="UserRole")]
+        [Route("UserInfo/{id}")]
+        public ActionResult<UserDto> GetUserDetails(int id) 
         {
             int userid = Convert.ToInt32( HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)); 
-            UserDto? user = UserManager.GetUserDetails(userid); 
+            UserDto? user = UserManager.GetUserDetails(id); 
             if (user == null) { return NotFound(); }
             return user;
         }
@@ -56,7 +56,6 @@ namespace Rentit.APIs.Controllers
         [Route("RequestHost")]
         public async Task<ActionResult> AddRequestHost(UploadRequestHostDto requestHost)
         {
-
             //PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);
             PropertyAddDto? PropToAdd = new PropertyAddDto()
             {

@@ -9,6 +9,8 @@ namespace Rentit.BL.Dtos
     public class UserDto
     {
         public int Id { get; set; }
+        public string Fname { get; set; }   =string .Empty;
+        public string Lname { get; set; }   = string .Empty;    
         public string Name { get; set; } = string.Empty; 
         public string Email { get; set; }= string.Empty;
         public string Image_URL { get; set; } = string.Empty;
