@@ -108,9 +108,11 @@ namespace Rentit.BL
         public IEnumerable<RequestRentReadDto> GetAllForAdmin()
         {
             IEnumerable<RequestRent> RequestRentFromDb =  requestrentRepo.GetAllForAdmin();
+          
             return RequestRentFromDb.Select(p => new RequestRentReadDto
             {
-                UsertId=p.UserID,
+                id = p.Id,      
+                UserId=p.UserID,
                 UserName= $"{p.User.FName} {p.User.LName}",
                 HostId=p.HostID,
                 HostName= $"{p.Host.FName} {p.Host.LName}",
@@ -126,7 +128,12 @@ namespace Rentit.BL
                 Nightly_price=p.Nightly_price,
                 Service_Fees=p.ServiceFee,
                 Total_price=p.Total_price,
-            });
+                Message=p.Message,
+                District = p.Property.Location.District_name   ,
+                Property_img = p.Property.Property_imgs.OrderBy(i=>i.Img_order).Select(i=>i.Img_URL).FirstOrDefault(),
+                HostStateID = p.Request_StateID_Host,
+                AdminStateID = p.Request_StateID_Admin
+            });;
         }
 
         public IEnumerable<RequestRentReadDto> GetAllForHost(int id)
@@ -134,7 +141,8 @@ namespace Rentit.BL
             IEnumerable<RequestRent> RequestRentFromDb = requestrentRepo.GetRequestsRentWithHostId(id);
             return RequestRentFromDb.Select(p => new RequestRentReadDto
             {
-                UsertId = p.UserID,
+                id = p.Id,  
+                UserId = p.UserID,
                 UserName = $"{p.User.FName} {p.User.LName}",
                 HostId = p.HostID,
                 HostName = $"{p.Host.FName} {p.Host.LName}",
@@ -150,7 +158,12 @@ namespace Rentit.BL
                 Nightly_price = p.Nightly_price,
                 Service_Fees = p.ServiceFee,
                 Total_price = p.Total_price,
-            });
+                Message = p.Message,
+                District = p.Property.Location.District_name,
+                Property_img = p.Property.Property_imgs.OrderBy(i => i.Img_order).Select(i => i.Img_URL).FirstOrDefault(),
+                HostStateID = p.Request_StateID_Host,
+                AdminStateID = p.Request_StateID_Admin
+            }); 
 
         }
 
@@ -159,7 +172,8 @@ namespace Rentit.BL
             IEnumerable<RequestRent> RequestRentFromDb = requestrentRepo.GetRequestsRentWithUserId(id);
             return RequestRentFromDb.Select(p => new RequestRentReadDto
             {
-                UsertId = p.UserID,
+                id = p.Id,
+                UserId = p.UserID,
                 UserName = $"{p.User.FName} {p.User.LName}",
                 HostId = p.HostID,
                 HostName = $"{p.Host.FName} {p.Host.LName}",
@@ -175,6 +189,11 @@ namespace Rentit.BL
                 Nightly_price = p.Nightly_price,
                 Service_Fees = p.ServiceFee,
                 Total_price = p.Total_price,
+                Message = p.Message ,
+                District = p.Property.Location.District_name,
+                Property_img = p.Property.Property_imgs.OrderBy(i => i.Img_order).Select(i => i.Img_URL).FirstOrDefault(),
+                 HostStateID = p.Request_StateID_Host,
+                AdminStateID = p.Request_StateID_Admin
             });
         }
        

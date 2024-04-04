@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Rentit.BL;
@@ -101,7 +102,8 @@ namespace Rentit.APIs.Controllers
                 var newFileName = $"{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}";
 
                 // Save the file
-                using (var stream = new FileStream($"Assets/PropertiesImages/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
+                using (var stream = new FileStream($"D:/ITI/Graduation project/Fornt-end/Rentit--angular/src/assets/Property Images/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
+                //using (var stream = new FileStream($"Assets/PropertiesImages/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
                 {
                     await requestHost.imgs[i].CopyToAsync(stream);
                 }
@@ -128,7 +130,8 @@ namespace Rentit.APIs.Controllers
             if (Clientimg != null)
             {
                 string fileext = Clientimg.FileName.Split('.').Last();
-                using (var fs = new FileStream($"Assets/UserImages/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
+                using (var fs = new FileStream($"D:/ITI/Graduation project/Fornt-end/Rentit--angular/src/assets/User Images/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
+                //using (var fs = new FileStream($"Assets/UserImages/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
                 {
                     await Clientimg.CopyToAsync(fs);
                     imgURL = client.Img_URL = $"{client.FName}{client.LName}{client.Id}.{fileext}";
@@ -162,7 +165,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
-        [Authorize(Policy = "UserRole")]
+        //[Authorize(Policy = "UserRole")]
         [Route("AcceptRentHost/{id}")]
         public ActionResult AcceptRentRequestbyHost(int id) 
         {
@@ -172,7 +175,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
-        [Authorize(Policy = "UserRole")]
+        //[Authorize(Policy = "UserRole")]
         [Route("CancelRentHost/{id}")]
         public ActionResult CancelRentRequestbyHost(int id)
         {

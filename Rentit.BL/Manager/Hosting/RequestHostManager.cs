@@ -34,7 +34,7 @@ namespace Rentit.BL
             RequestHost? request = requestHostRepo.GetByID(requestID);
             if (request == null) { return false; }
             request.Request_StateID = 3;
-            request.Message = "Your Request For Hosting your property is Cancelled ";
+            request.Message = "Your request For Hosting your property is rejected";
             requestHostRepo.Update(request);
             requestHostRepo.SaveChanges();
             return true;
@@ -62,6 +62,7 @@ namespace Rentit.BL
                 District_name = propertyAdd.District_name,
                 Location_url = propertyAdd.Location_url,
                 GovernateId = propertyAdd.GovernateId,
+                Message = "Your request has been sent ,Please wait for the response"
             };
             foreach (var item in propertyAdd.attrubutesToAddDto)
             {
@@ -91,6 +92,7 @@ namespace Rentit.BL
             IEnumerable<RequestHost> requestHosts = requestHostRepo.GetAll();
             return requestHosts.Select(i => new RequestHostReadDto
             {
+                id = i.Id,  
                 UserID = i.UserID,
                 Request_StateID = i.Request_StateID,
                 Request_State = i.Request_state.Status,
@@ -113,7 +115,19 @@ namespace Rentit.BL
                 Place_Type = i.Place_Type.Name,
                 PropetyTypeId = i.PropetyTypeId,
                 Property_Type = i.Property_Type.Name,
-            });
+                Message = i.Message,
+                imageToAddRequestHostDtos = i.Imgs.Select(p => new ImageToAddRequestHostDto
+                {
+                     Img_URL = p.Img_URL,
+                     Img_order= p.Img_order,    
+                }).ToList(),
+                attrubutesToAddDto = i.Attributes_requests.Select(p => new AttributesChildDto
+                { 
+                   Id = p.Id,   
+                   Name = p.Name,   
+                   Icon_Url = p.Icon_Url,
+                }).ToList(),    
+            });;
         }
     }
 }
