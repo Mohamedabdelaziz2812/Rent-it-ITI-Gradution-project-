@@ -8,6 +8,7 @@ namespace Rentit.BL.Dtos
 {
     public class RequestHostReadDto
     {
+        public required int id { get; set; }   
         public required int UserID { get; set; }
         public required int Request_StateID { get; set; }
         public required string Request_State {  get; set; } =string.Empty;
@@ -30,6 +31,9 @@ namespace Rentit.BL.Dtos
         public required string Place_Type { get; set; } = string.Empty;
         public required int PropetyTypeId { get; set; }
         public required string Property_Type{ get; set; } = string.Empty;
+        public required string Message {  get; set; } = string.Empty;
+        public List<ImageToAddRequestHostDto> imageToAddRequestHostDtos { get; set; } = new();
+        public List<AttributesChildDto> attrubutesToAddDto { get; set; } = new();
 
     }
 }

@@ -19,6 +19,7 @@ namespace Rentit.BL.Dtos
         public string Role {  get; set; }   = string.Empty; 
         public int RoleId { get; set; } 
         public List<RequestRentReadDto> RequestsRent { get; set; } = new();
+        public List<RequestRentReadDto> RequestsRentForMyProps { get; set; } = new();
         public List<RequestHostReadDto> RequestsHost { get; set; } = new();
         public List<PropertyReadDetailsDto> UserProperties { get; set; } = new();
         public List<PropertyReadDetailsDto> UserFavourites { get; set; } = new();

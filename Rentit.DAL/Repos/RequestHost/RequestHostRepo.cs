@@ -26,6 +26,8 @@ namespace Rentit.DAL
                 .Include(r=>r.governate)
                 .Include(r=>r.Place_Type)
                 .Include(r=>r.Property_Type)
+                .Include(r=>r.Imgs)
+                .Include(r=>r.Attributes_requests)
                 .OrderBy(r=>r.Request_StateID).ToList();
         }
 
