@@ -62,7 +62,7 @@ namespace Rentit.APIs.Controllers
         [HttpPost]
         [Authorize(Policy ="UserRole")]
         [Route("Rent/{propertyid}")]
-        public ActionResult Rent([FromBody] RequestRentAddDto ReqToAdd, [FromRoute] int propertyid)
+        public ActionResult Rent([FromForm] RequestRentAddDto ReqToAdd, [FromRoute] int propertyid)
         {
             int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var IsFound = requestRentManager.AddRequest(ReqToAdd, propertyid,userid);
@@ -73,10 +73,10 @@ namespace Rentit.APIs.Controllers
         [HttpPost]
         [Authorize(Policy = "UserRole")]
         [Route("AddReview/{PropertyId}")]
-        public ActionResult AddReview(ReviewAddDto review, int PropertyId)
+        public ActionResult AddReview([FromForm]ReviewAddDto Review,[FromRoute] int PropertyId)
         {
             int userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            PropertyManager.AddReview(review, PropertyId,userid);
+            PropertyManager.AddReview(Review, PropertyId,userid);
             return Ok();
         }
        
