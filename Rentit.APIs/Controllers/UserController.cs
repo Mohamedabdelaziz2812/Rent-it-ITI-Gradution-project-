@@ -33,12 +33,12 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Policy ="UserRole")]
-        [Route("UserInfo/{id}")]
-        public ActionResult<UserDto> GetUserDetails(int id) 
+        [Authorize]
+        [Route("UserInfo")]
+        public ActionResult<UserDto> GetUserDetails() 
         {
             int userid = Convert.ToInt32( HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)); 
-            UserDto? user = UserManager.GetUserDetails(id); 
+            UserDto? user = UserManager.GetUserDetails(userid); 
             if (user == null) { return NotFound(); }
             return user;
         }
@@ -55,7 +55,7 @@ namespace Rentit.APIs.Controllers
         [HttpPost]
         [Authorize(Policy = "UserRole")]
         [Route("RequestHost")]
-        public async Task<ActionResult> AddRequestHost(UploadRequestHostDto requestHost)
+        public async Task<ActionResult> AddRequestHost([FromForm]UploadRequestHostDto requestHost)
         {
             //PropertyAddDto? PropToAdd = JsonConvert.DeserializeObject<PropertyAddDto>(requestHost.propertyAdd);
             PropertyAddDto? PropToAdd = new PropertyAddDto()
@@ -78,7 +78,7 @@ namespace Rentit.APIs.Controllers
                 PropetyTypeId = requestHost.PropetyTypeId,
                 attrubutesToAddDto = requestHost.attrubutesToAddDto
             };
-            var AllowedExtensions = new string[] { ".png", ".jpg", ".svg" };
+            var AllowedExtensions = new string[] { ".png", ".jpg", ".svg" , ".jpeg" };
             var MaxFileSize = 4_000_000; // 4 MB
 
             List<string> uploadedFiles = new List<string>();
@@ -102,7 +102,7 @@ namespace Rentit.APIs.Controllers
                 var newFileName = $"{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}";
 
                 // Save the file
-                using (var stream = new FileStream($"D:/ITI/Graduation project/Fornt-end/Rentit--angular/src/assets/Property Images/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
+                using (var stream = new FileStream($"D:/ITI/Graduation project/Fornt-end/New folder (2)/Rent-it-angular-/src/assets/Property Images/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
                 //using (var stream = new FileStream($"Assets/PropertiesImages/{PropToAdd?.Property_Name}{PropToAdd?.City}{PropToAdd?.Street}{i + 1}{extension}", FileMode.Create))
                 {
                     await requestHost.imgs[i].CopyToAsync(stream);
@@ -130,7 +130,7 @@ namespace Rentit.APIs.Controllers
             if (Clientimg != null)
             {
                 string fileext = Clientimg.FileName.Split('.').Last();
-                using (var fs = new FileStream($"D:/ITI/Graduation project/Fornt-end/Rentit--angular/src/assets/User Images/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
+                using (var fs = new FileStream($"D:/ITI/Graduation project/Fornt-end/New folder (2)/Rent-it-angular-/src/assets/User Images/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
                 //using (var fs = new FileStream($"Assets/UserImages/{client.FName}{client.LName}{client.Id}.{fileext}", FileMode.Create))
                 {
                     await Clientimg.CopyToAsync(fs);
@@ -165,7 +165,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Policy = "UserRole")]
+        [Authorize(Policy = "UserRole")]
         [Route("AcceptRentHost/{id}")]
         public ActionResult AcceptRentRequestbyHost(int id) 
         {
@@ -175,7 +175,7 @@ namespace Rentit.APIs.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Policy = "UserRole")]
+        [Authorize(Policy = "UserRole")]
         [Route("CancelRentHost/{id}")]
         public ActionResult CancelRentRequestbyHost(int id)
         {
@@ -206,7 +206,7 @@ namespace Rentit.APIs.Controllers
 
         [HttpGet]
         [Authorize(Policy = "AdminRole")]
-        [Route("Rent")]
+        [Route("AllRent")]
         public ActionResult<List<RequestRentReadDto>> GetAllRentRequests()
         {
             return requestRentManager.GetAllForAdmin().ToList();
@@ -214,7 +214,7 @@ namespace Rentit.APIs.Controllers
 
         [HttpGet]
         [Authorize(Policy = "AdminRole")]
-        [Route("Host")]
+        [Route("AllHost")]
         public ActionResult<List<RequestHostReadDto>> GetAllHostRequest()
         {
             return requestHostManager.GetAll().ToList();    

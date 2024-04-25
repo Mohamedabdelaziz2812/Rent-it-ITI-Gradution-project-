@@ -69,7 +69,8 @@ namespace Rentit.APIs.Controllers
             return new TokenDto
             {
                 Token = TokenString,
-                ExpiryDate = exp
+                ExpiryDate = exp,
+                Role = "User"
             };
         }
 
@@ -107,7 +108,7 @@ namespace Rentit.APIs.Controllers
             };
             await userManager.AddClaimsAsync(NewAcc, UserClaims);
 
-            return Ok("Done");
+            return Ok();
         }
     }
 }

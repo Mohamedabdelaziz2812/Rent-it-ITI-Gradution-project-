@@ -66,6 +66,7 @@ namespace Rentit.DAL
                 .Include(p=>p.Location)
                 .ThenInclude(x => x.Governate)
                 .Include(p=>p.UserReviews)
+                .ThenInclude(p=>p.User)
                 .FirstOrDefault(p=>p.Id == id);    
         }
 

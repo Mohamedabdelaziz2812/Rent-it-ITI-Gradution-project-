@@ -193,7 +193,7 @@ namespace Rentit.BL
 
                 UserReviews = property.UserReviews.Select(r => new ReviewReadDto
                 {
-                    Client_Name = $"{r.User.FName}+{r.User.LName}",
+                    Client_Name = $"{r.User.FName} {r.User.LName}",
                     Review = r.Comment,
                     Img_Url = r.User.Img_URL
                 }).ToList()
@@ -221,11 +221,11 @@ namespace Rentit.BL
             return true;
         }
 
-        public void AddReview(ReviewAddDto review, int propertyid, int userid)
+        public void AddReview(ReviewAddDto Review, int propertyid, int userid)
         {
             UserReview userReview = new UserReview()
             {
-                Comment = review.Review,
+                Comment = Review.Review,
                 Review_date = DateTime.Now, 
                 PropertyID = propertyid,    
                 Userid = userid           
